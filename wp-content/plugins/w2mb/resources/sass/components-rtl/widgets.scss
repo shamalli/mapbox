@@ -1,0 +1,23 @@
+.w2mb-categories-widget a,
+.w2mb-locations-widget a {
+	color: inherit;
+	display: inline-block;
+	padding: 3px 0;
+}
+li.w2mb-widget-listing {
+	list-style: none;
+	margin-bottom: 15px;
+	min-height: 45px;
+}
+li.w2mb-widget-listing::before {
+	content: none !important;
+}
+.w2mb-widget-listing-logo {
+	float: left;
+}
+.w2mb-widget-listing-title {
+	margin-left: 50px;
+}
+.w2mb-widget-listing-title-nologo {
+	margin-left: 5px;
+}

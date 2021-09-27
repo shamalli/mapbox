@@ -1,0 +1,16 @@
+<div class="w2mb-demo-prev-next-demos">
+<span class="w2mb-demo-prev-demo">Prev demo: <a href="[base_url]/mapbox-locator-plugin/">Home page</a></span><span class="w2mb-demo-next-demo">Next demo: <a href="[base_url]/ajax-map/">AJAX Map</a></span>
+</div>
+
+<p>There is a simple way to position search and map elements without Visual Composer, SiteOrigin or any other page builder plugins using pure HTML and CSS. Since WordPress 5.0 it became much more easier and faster to build needed shortcodes and position elements using standard WP editor.</p>
+<p>Main feature of this page: both shortcodes (mapbox and mapbox-search) connected by same value of "uid" parameter, so they work together in AJAX mode.</p>
+
+<!-- wp:columns -->
+<div>
+<div style="float: left; width: 58%;">
+[mapbox id={map_id}]
+</div>
+<div style="float: right; width: 40%;">
+[mapbox-search uid="u1" columns="1" advanced_open="1"]
+</div>
+</div>

@@ -1,0 +1,57 @@
+/*
+Error: Undefined variable: "$mobile-screen-width".
+        on line 58 of C:\xampp\htdocs\wp_mapbox\wp-content\themes\w2mb-theme\resources\sass\components\layout.scss
+
+53: 
+54: #content {
+55: 	clear: both;
+56: }
+57: 
+58: @media screen and (max-width: $mobile-screen-width) {
+59: 	.container-fixed #primary,
+60: 	.sidebar {
+61: 		padding-right: 5px;
+62: 		padding-left: 5px;
+63: 	}
+
+Backtrace:
+C:\xampp\htdocs\wp_mapbox\wp-content\themes\w2mb-theme\resources\sass\components\layout.scss:58
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/script/tree/variable.rb:49:in `_perform'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/script/tree/node.rb:50:in `perform'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:555:in `block in run_interp_no_strip'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:553:in `map'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:553:in `run_interp_no_strip'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:560:in `run_interp'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:525:in `visit_media'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:79:in `block in with_base'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:135:in `with_frame'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:79:in `with_base'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:162:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `map'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:171:in `block in visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:170:in `visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:190:in `visit_root'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:161:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:10:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/root_node.rb:36:in `css_tree'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/root_node.rb:20:in `render'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/engine.rb:290:in `render'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/sass_scss.rb:400:in `run'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/sass_scss.rb:63:in `process_result'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/base.rb:52:in `parse'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/base.rb:19:in `parse!'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/bin/sass:13:in `<top (required)>'
+C:/Program Files (x86)/Koala/bin/sass:22:in `load'
+C:/Program Files (x86)/Koala/bin/sass:22:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Undefined variable: \"$mobile-screen-width\".\A         on line 58 of C:\xampp\htdocs\wp_mapbox\wp-content\themes\w2mb-theme\resources\sass\components\layout.scss\A \A 53: \A 54: #content {\A 55: 	clear: both;\A 56: }\A 57: \A 58: @media screen and (max-width: $mobile-screen-width) {\A 59: 	.container-fixed #primary,\A 60: 	.sidebar {\A 61: 		padding-right: 5px;\A 62: 		padding-left: 5px;\A 63: 	}"; }

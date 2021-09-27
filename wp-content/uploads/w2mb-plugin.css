@@ -1,0 +1,209 @@
+
+div.w2mb-content a,
+div.w2mb-content a:visited,
+div.w2mb-content a:focus,
+div.w2mb-content .w2mb-pagination > li > a,
+div.w2mb-content .w2mb-pagination > li > a:visited,
+div.w2mb-content .w2mb-pagination > li > a:focus,
+div.w2mb-content .w2mb-btn-default, div.w2mb-content div.w2mb-btn-default:visited, div.w2mb-content .w2mb-btn-default:focus,
+div.w2mb-content.w2mb-terms-menu .w2mb-categories-root a,
+div.w2mb-content.w2mb-terms-menu .w2mb-categories-root a:visited,
+div.w2mb-content.w2mb-terms-menu .w2mb-categories-root a:focus,
+div.w2mb-content.w2mb-terms-menu .w2mb-locations-root a,
+div.w2mb-content.w2mb-terms-menu .w2mb-locations-root a:visited,
+div.w2mb-content.w2mb-terms-menu .w2mb-locations-root a:focus {
+	color: #2393ba;
+}
+div.w2mb-content a:hover,
+div.w2mb-content .w2mb-pagination > li > a:hover,
+div.w2mb-content.w2mb-terms-menu .w2mb-categories-root a:hover,
+div.w2mb-content.w2mb-terms-menu .w2mb-locations-root a:hover {
+	color: #2a6496;
+}
+
+div.w2mb-content .w2mb-btn-primary,
+div.w2mb-content a.w2mb-btn-primary,
+div.w2mb-content input[type="submit"],
+div.w2mb-content input[type="button"],
+div.w2mb-content .w2mb-btn-primary:visited,
+div.w2mb-content a.w2mb-btn-primary:visited,
+div.w2mb-content input[type="submit"]:visited,
+div.w2mb-content input[type="button"]:visited,
+div.w2mb-content .w2mb-btn-primary:focus,
+div.w2mb-content a.w2mb-btn-primary:focus,
+div.w2mb-content input[type="submit"]:focus,
+div.w2mb-content input[type="button"]:focus,
+div.w2mb-content .w2mb-btn-primary:disabled,
+div.w2mb-content a.w2mb-btn-primary:disabled,
+div.w2mb-content .w2mb-btn-primary:disabled:focus,
+div.w2mb-content a.w2mb-btn-primary:disabled:focus,
+div.w2mb-content .w2mb-btn-primary:disabled:hover,
+div.w2mb-content a.w2mb-btn-primary:disabled:hover,
+form.w2mb-content .w2mb-btn-primary,
+form.w2mb-content a.w2mb-btn-primary,
+form.w2mb-content input[type="submit"],
+form.w2mb-content input[type="button"],
+form.w2mb-content .w2mb-btn-primary:visited,
+form.w2mb-content a.w2mb-btn-primary:visited,
+form.w2mb-content input[type="submit"]:visited,
+form.w2mb-content input[type="button"]:visited,
+form.w2mb-content .w2mb-btn-primary:focus,
+form.w2mb-content a.w2mb-btn-primary:focus,
+form.w2mb-content input[type="submit"]:focus,
+form.w2mb-content input[type="button"]:focus,
+form.w2mb-content .w2mb-btn-primary:disabled,
+form.w2mb-content a.w2mb-btn-primary:disabled,
+form.w2mb-content .w2mb-btn-primary:disabled:focus,
+form.w2mb-content a.w2mb-btn-primary:disabled:focus,
+form.w2mb-content .w2mb-btn-primary:disabled:hover,
+form.w2mb-content a.w2mb-btn-primary:disabled:hover,
+div.w2mb-content .wpcf7-form .wpcf7-submit,
+div.w2mb-content .wpcf7-form .wpcf7-submit:visited,
+div.w2mb-content .wpcf7-form .wpcf7-submit:focus {
+	color: #FFFFFF;
+	background-color: #2393ba;
+	background-image: none;
+	border-color: #0f7fa6;
+}
+div.w2mb-content .w2mb-btn-primary:hover,
+div.w2mb-content a.w2mb-btn-primary:hover,
+div.w2mb-content input[type="submit"]:hover,
+div.w2mb-content input[type="button"]:hover,
+form.w2mb-content .w2mb-btn-primary:hover,
+form.w2mb-content a.w2mb-btn-primary:hover,
+form.w2mb-content input[type="submit"]:hover,
+form.w2mb-content input[type="button"]:hover,
+div.w2mb-content .mapboxgl-ctrl button:not(:disabled):hover,
+div.w2mb-content .wpcf7-form .wpcf7-submit:hover {
+	color: #FFFFFF;
+	background-color: #1f82a5;
+	background-image: none;
+	border-color: #0b6e91;
+	text-decoration: none;
+}
+
+.w2mb-content.w2mb-search-form {
+	background: rgba(107,200,200,1);
+}
+form.w2mb-content.w2mb-search-form,
+form.w2mb-content.w2mb-search-form a,
+form.w2mb-content.w2mb-search-form a:hover,
+form.w2mb-content.w2mb-search-form a:visited,
+form.w2mb-content.w2mb-search-form a:focus,
+form.w2mb-content a.w2mb-advanced-search-label,
+form.w2mb-content a.w2mb-advanced-search-label:hover,
+form.w2mb-content a.w2mb-advanced-search-label:visited,
+form.w2mb-content a.w2mb-advanced-search-label:focus {
+	color: #FFFFFF;
+}
+
+.w2mb-field-caption .w2mb-field-icon {
+	color: #2393ba;
+}
+.w2mb-content select:not(.w2mb-week-day-input),
+.w2mb-content select:not(.w2mb-week-day-input):focus {
+	background-image:
+	linear-gradient(50deg, transparent 50%, #FFFFFF 50%),
+	linear-gradient(130deg, #FFFFFF 50%, transparent 50%),
+	linear-gradient(to right, #2393ba, #2393ba) !important;
+}
+.w2mb-content .w2mb-checkbox .w2mb-control-indicator,
+.w2mb-content .w2mb-radio .w2mb-control-indicator {
+	border-color: #2393ba;
+}
+.w2mb-content .w2mb-checkbox label input:checked ~ .w2mb-control-indicator,
+.w2mb-content .w2mb-radio label input:checked ~ .w2mb-control-indicator {
+	background: #2393ba;
+}
+.w2mb-content .ui-slider.ui-slider-horizontal .ui-widget-header {
+	background-color: #1f82a5;
+}
+.w2mb-content .ui-slider.ui-widget-content .ui-slider-handle.ui-state-default,
+.w2mb-content .ui-slider.ui-widget-content .ui-slider-handle.ui-state-default:focus,
+.w2mb-content .ui-slider.ui-widget-content .ui-slider-handle.ui-state-default:active,
+.w2mb-content .ui-slider.ui-widget-content .ui-slider-handle.ui-state-focus,
+.w2mb-content .ui-slider.ui-widget-content .ui-slider-handle.ui-state-hover {
+	border: 1px solid #1f82a5;
+	background-color: #2393ba;
+}
+.w2mb-content .w2mb-map-info-window-title {
+	background-color: #2393ba;
+}
+.w2mb-content .mapboxgl-popup-content {
+	width: 350px;
+}
+.w2mb-content .w2mb-category-label,
+.w2mb-content .w2mb-tag-label {
+	color: #2393ba;
+	border-color: #2393ba;
+}
+div.w2mb-content .w2mb-pagination > li.w2mb-active > a,
+div.w2mb-content .w2mb-pagination > li.w2mb-active > span,
+div.w2mb-content .w2mb-pagination > li.w2mb-active > a:hover,
+div.w2mb-content .w2mb-pagination > li.w2mb-active > span:hover,
+div.w2mb-content .w2mb-pagination > li.w2mb-active > a:focus,
+div.w2mb-content .w2mb-pagination > li.w2mb-active > span:focus {
+	background-color: #2393ba;
+	border-color: #2393ba;
+	color: #FFFFFF;
+}
+.w2mb-found-listings .w2mb-badge {
+	background-color: #2393ba;
+}
+.w2mb-rating-avgvalue span {
+	background-color: #2393ba;
+}
+.w2mb-content.w2mb-search-map-form .w2mb-search-overlay {
+	background-color: rgba(35,147,186,0.8);
+}
+.w2mb-field-output-block-string .w2mb-field-phone-content,
+.w2mb-field-output-block-website .w2mb-field-content {
+	color: #2393ba;
+	font-weight: bold;
+}
+.w2mb-loader:before {
+	border-top-color: #2393ba;
+	border-bottom-color: #2393ba;
+}
+.w2mb-listing-dialog.ui-dialog .ui-widget-header {
+	background-color: #2393ba;
+}
+article.w2mb-listing-location-selected {
+	background-color: rgba(35,147,186,0.1);
+}
+.w2mb-field-checkbox-item-checked span {
+	color: #2393ba;
+}
+
+
+/* It works with devices width more than 768 pixels. */
+@media screen and (min-width: 768px) {
+	.w2mb-single-listing-logo-wrap {
+		max-width: 400px;
+		float: left;
+		margin: 0 20px 20px 0;
+	}
+	.rtl .w2mb-single-listing-logo-wrap {
+		float: right;
+		margin: 0 0 20px 20px;
+	}
+	/* temporarily */
+	/*.w2mb-single-listing-text-content-wrap {
+		margin-left: 420px;
+	}*/
+}
+
+
+.w2mb-single-listing-logo-wrap .w2mb-big-slide {
+	background-size: cover;
+}
+
+
+.w2mb-map-marker,
+.w2mb-map-marker-empty {
+	height: 45px;
+	width: 45px;
+}
+.w2mb-map-marker .w2mb-map-marker-icon {
+		font-size: 25px !important;
+	}

@@ -1,0 +1,90 @@
+button,
+a.button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.woocommerce #respond input#submit,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button {
+    display: inline-block;
+	cursor: pointer;
+    color: #FFFFFF;
+    background: $primary-color;
+	border-radius: $button-border-radius;
+	height: $button-height;
+	font-size: $button-font-size;
+	padding: $button-padding;
+	margin: 0;
+	max-width: 100%;
+	float: none;
+	height: 48px;
+	font-size: 16px;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	background-image: none;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	line-height: 1.42857143;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+button:hover,
+a.button:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover {
+    border-color: transparent;
+}
+
+button:focus,
+input[type="button"]:focus,
+input[type="reset"]:focus,
+input[type="submit"]:focus,
+button:active,
+input[type="button"]:active,
+input[type="reset"]:active,
+input[type="submit"]:active {
+
+}
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+    outline:none;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"]{
+    padding: 6px 0 6px 9px;
+}
+
+select {
+    width: 100%;
+    padding:5px;
+}
+
+textarea {
+    padding:10px;
+    width: 100%;
+}

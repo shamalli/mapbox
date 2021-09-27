@@ -1,0 +1,72 @@
+#page {
+    position: relative;
+    margin: 0 auto;
+}
+
+.container {
+	max-width: 1300px;
+	margin: 0 auto;
+	padding-left: 25px;
+	padding-right: 25px;
+}
+.container-full-width {
+	max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+@media only screen and (max-width:1300px) {
+	.container {
+    	/* width: 97%; */
+	}
+}
+
+.container-fixed .inner-wrapper {
+	margin-left: -25px;
+	margin-right: -25px;
+}
+
+.sidebar-page-both #primary {
+	float: left;
+	width: 40%;
+}
+.sidebar-page-left #primary,
+.sidebar-page-right #primary {
+	float: left;
+	width: 70%;
+}
+.container-fixed #primary {
+	padding-right: 25px;
+	padding-left: 25px;
+}
+.sidebar-left,
+.sidebar-right {
+	width: 30%;
+	padding-right: 25px;
+	padding-left: 25px;
+}
+.sidebar-left {
+	float: left;
+}
+.sidebar-right {
+	float: right;
+}
+
+#content {
+	clear: both;
+}
+
+@media screen and (max-width: $mobile-screen-width) {
+	.container-fixed #primary,
+	.sidebar {
+		padding-right: 5px;
+		padding-left: 5px;
+	}
+}
+@media screen and (max-width: $desktop-screen-width) {
+	.sidebar-page-both #primary,
+	.sidebar-page-left #primary,
+	.sidebar-page-right #primary {
+		float: none;
+		width: 100%;
+	}
+}

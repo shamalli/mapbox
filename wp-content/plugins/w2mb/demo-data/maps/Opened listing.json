@@ -1,0 +1,13 @@
+[
+{"data":
+[
+{"meta_key":"w2mb_map_settings","meta_value":"a:9:{s:3:\"uid\";s:0:\"\";s:3:\"num\";s:3:\"100\";s:5:\"width\";s:0:\"\";s:6:\"height\";s:3:\"650\";s:9:\"map_style\";s:7:\"default\";s:13:\"sticky_scroll\";s:1:\"0\";s:24:\"sticky_scroll_toppadding\";s:1:\"0\";s:8:\"clusters\";s:1:\"0\";s:11:\"geolocation\";s:1:\"0\";}"},
+{"meta_key":"w2mb_map_starting_point","meta_value":"a:6:{s:18:\"use_starting_point\";s:1:\"1\";s:14:\"start_latitude\";s:17:\"34.05435721823218\";s:15:\"start_longitude\";s:19:\"-118.21560679687502\";s:10:\"start_zoom\";s:2:\"10\";s:6:\"radius\";s:0:\"\";s:13:\"radius_circle\";s:1:\"0\";}"},
+{"meta_key":"w2mb_map_sidebar_listings","meta_value":"a:4:{s:13:\"search_on_map\";s:1:\"1\";s:18:\"search_on_map_open\";s:1:\"0\";s:8:\"order_by\";s:5:\"title\";s:5:\"order\";s:4:\"DESC\";}"},
+{"meta_key":"w2mb_map_controls","meta_value":"a:9:{s:10:\"draw_panel\";s:1:\"1\";s:18:\"enable_full_screen\";s:1:\"1\";s:29:\"enable_full_screen_by_default\";s:1:\"0\";s:17:\"enable_wheel_zoom\";s:1:\"1\";s:28:\"enable_dragging_touchscreens\";s:1:\"1\";s:18:\"center_map_onclick\";s:1:\"0\";s:16:\"zoom_map_onclick\";s:1:\"0\";s:7:\"counter\";s:1:\"1\";s:12:\"counter_text\";s:22:\"Number of locations %d\";}"},
+{"meta_key":"w2mb_map_search","meta_value":"a:12:{s:20:\"show_keywords_search\";s:1:\"1\";s:20:\"keywords_ajax_search\";s:1:\"1\";s:20:\"keywords_placeholder\";s:0:\"\";s:22:\"show_categories_search\";s:1:\"1\";s:23:\"categories_search_level\";s:1:\"2\";s:8:\"category\";s:0:\"\";s:21:\"show_locations_search\";s:1:\"1\";s:22:\"locations_search_level\";s:1:\"2\";s:8:\"location\";s:0:\"\";s:19:\"show_address_search\";s:1:\"1\";s:19:\"address_placeholder\";s:16:\"Los Angeles, USA\";s:18:\"show_radius_search\";s:1:\"1\";}"},
+{"meta_key":"w2mb_map_markers","meta_value":"a:8:{s:6:\"author\";s:0:\"\";s:8:\"post__in\";s:0:\"\";s:11:\"field_phone\";s:0:\"\";s:20:\"field_event_date_min\";s:0:\"\";s:20:\"field_event_date_max\";s:0:\"\";s:28:\"field_additional_description\";s:0:\"\";s:15:\"field_price_min\";s:0:\"\";s:15:\"field_price_max\";s:0:\"\";}"},
+{"meta_key":"w2mb_map_ajax","meta_value":"a:3:{s:12:\"ajax_loading\";s:1:\"0\";s:20:\"ajax_markers_loading\";s:1:\"0\";s:15:\"use_ajax_loader\";s:1:\"1\";}"}
+]
+}
+]

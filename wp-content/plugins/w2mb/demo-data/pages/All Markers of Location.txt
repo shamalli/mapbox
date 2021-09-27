@@ -1,0 +1,7 @@
+<div class="w2mb-demo-prev-next-demos">
+<span class="w2mb-demo-prev-demo">Prev demo: <a href="[base_url]/directions/">Directions</a></span><span class="w2mb-demo-next-demo">Next demo: <a href="[base_url]/markers-of-one-category/">Markers of one category</a></span>
+</div>
+
+Display all map markers in California.
+
+[mapbox id={map_id}]

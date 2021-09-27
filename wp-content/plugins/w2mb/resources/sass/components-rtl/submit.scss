@@ -1,0 +1,55 @@
+ul.w2mb-categorychecklist li ul.children {
+	margin-right: 12px;
+	margin-left: 0;
+}
+ul.w2mb-categorychecklist li label {
+	padding-right: 5px;
+	padding-left: 0;
+}
+ul.w2mb-categorychecklist span.w2mb-category-has-checked {
+	left: -2px;
+	right: 0;
+}
+ul.w2mb-categorychecklist li ul {
+	border-right: 1px solid $border-color;
+	border-left: 0;
+    padding: 0 25px 0 0;
+}
+ul.w2mb-categorychecklist li ul li:before {
+    right: -20px;
+	left: auto;
+}
+
+/* Content fields */
+.w2mb-delete-selection-item {
+	float: right;
+}
+
+.w2mb-icon,
+.w2mb-png-image,
+.w2mb-fa-icon {
+	float: right;
+}
+.w2mb-attached-item,
+.w2mb-upload-item {
+	float: right;
+	margin: 0 0 20px 20px;
+}
+
+.w2mb-fa.w2mb-attached-item-delete {
+	left: 10px;
+	right: auto;
+}
+.w2mb-attached-item-metadata {
+	right: 10px;
+	left: auto;
+}
+
+.w2mb-content-fields-metabox .w2mb-field-checkbox-input {
+	text-align: right;
+}
+
+.w2mb-table.w2mb-dashboard-listings td,
+.w2mb-table.w2mb-dashboard-listings th {
+	text-align: right;
+}

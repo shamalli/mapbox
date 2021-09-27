@@ -1,0 +1,7 @@
+<div class="w2mb-demo-prev-next-demos">
+<span class="w2mb-demo-prev-demo">Prev demo: <a href="[base_url]/all-markers-of-location/">All Markers of Location</a></span><span class="w2mb-demo-next-demo">Next demo: <a href="[base_url]/map-styles/">Map styles</a></span>
+</div>
+
+Display all map markers in Real Estate category.
+
+[mapbox id={map_id}]

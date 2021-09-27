@@ -1,0 +1,19 @@
+.subcategories ul li,
+.sublocations ul li {
+	margin-right: 5px;
+	margin-left: 0;
+}
+.w2mb-content.w2mb-terms-menu .w2mb-categories-root a,
+.w2mb-content.w2mb-terms-menu .w2mb-categories-root a:hover,
+.w2mb-content.w2mb-terms-menu .w2mb-categories-root a:visited,
+.w2mb-content.w2mb-terms-menu .w2mb-categories-root a:focus,
+.w2mb-content.w2mb-terms-menu .w2mb-locations-root a,
+.w2mb-content.w2mb-terms-menu .w2mb-locations-root a:hover,
+.w2mb-content.w2mb-terms-menu .w2mb-locations-root a:visited,
+.w2mb-content.w2mb-terms-menu .w2mb-locations-root a:focus {
+	text-align: right;
+}
+.w2mb-category-count,
+.w2mb-location-count {
+	float: left;
+}

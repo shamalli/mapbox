@@ -1,0 +1,93 @@
+.w2mb-map-info-window-title .w2mb-close-info-window {
+	float: left;
+}
+.w2mb-map-info-window-logo {
+	float: left;
+}
+.w2mb-map-field-icon {
+	padding-right: 0;
+	padding-left: 15px;
+}
+.w2mb-map-info-window-buttons a:first-child {
+	float: right;
+}
+.w2mb-map-info-window-buttons a:last-child {
+	float: left;
+}
+.w2mb-map-draw-panel-wrapper {
+	right: 0 !important;
+	padding-left: 6px;
+	padding-right: 0;
+}
+.w2mb-map-draw-panel button.w2mb-btn.w2mb-btn-primary.w2mb-map-location {
+	float: left;
+}
+div.w2mb-map-locations-counter-bar {
+	float: left;
+}
+/************************ Map Search ************************/
+.w2mb-maps-canvas-wrapper.w2mb-map-search-input-enabled .w2mb-maps-canvas.w2mb-sidebar-open .w2mb-map-draw-panel {
+	padding-right: 0;
+}
+.w2mb-maps-canvas-wrapper.w2mb-map-search-input-enabled .w2mb-map-draw-panel {
+	padding-left: 0;
+	padding-right: $map-search-width;
+}
+.w2mb-map-search-wrapper {
+	right: 10px;
+	left: auto;
+}
+.w2mb-map-search-panel-wrapper {
+	margin-right: -$map-search-width;
+	margin-left: 0;
+}
+.w2mb-sidebar-open .w2mb-map-search-panel-wrapper {
+	margin-right: 0;
+}
+.w2mb-map-sidebar-toggle-container {
+	right: 0;
+	left: auto;
+	margin-right: 0;
+}
+.w2mb-map-sidebar-toggle {
+	transform: scaleX(1);
+}
+.w2mb-sidebar-open .w2mb-map-sidebar-toggle-container {
+	margin-right: $map-search-width;
+	margin-left: 0;
+}
+.w2mb-sidebar-open .w2mb-map-sidebar-toggle {
+	transform: scaleX(-1);
+}
+.w2mb-map-search-input-container {
+	left: auto;
+	right: 0;
+}
+.w2mb-content .w2mb-map-search-input-container input.w2mb-form-control,
+.w2mb-content .w2mb-map-search-input-container input.w2mb-form-control:focus {
+	padding-right: 55px;
+	padding-left: 0;
+}
+.w2mb-map-search-toggle::after {
+	right: auto;
+	left: 0;
+	border-right: 1px solid $border-color;
+	border-left: 0;
+}
+.w2mb-map-listing-logo-wrap {
+	float: right;
+	margin-left: 10px;
+	margin-right: 0;
+}
+.w2mb-map-listing-field-icon {
+	padding-left: 0;
+}
+
+/************************ Map Directions ************************/
+.w2mb-map-directions-panel-wrapper {
+	margin-right: -$map-search-width;
+	box-shadow: 20px 0 0 rgba(0, 0, 0, 0.3);
+}
+.w2mb-directions-sidebar-open .w2mb-map-directions-panel-wrapper {
+	margin-right: 0;
+}

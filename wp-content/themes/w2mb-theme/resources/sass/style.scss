@@ -1,0 +1,29 @@
+/*
+Theme Name: Web Directory Theme
+Version: 1.0
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: WDT
+Tags: one-column, two-columns, three-columns, left-sidebar, right-sidebar, custom-menu, featured-images, full-width-template, translation-ready, theme-options, threaded-comments, custom-logo, custom-header, blog
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learined with others.
+
+*/
+
+@import 'variables/variables.scss';
+
+
+@import 'components/normalize';
+@import 'components/clearings';
+@import 'components/typography';
+@import 'components/links_tags';
+@import 'components/buttons_controls';
+@import 'components/menus';
+@import 'components/misc';
+@import 'components/layout';
+@import 'components/header';
+@import 'components/sidebar';
+@import 'components/loader';
+@import 'components/comments';
+@import 'components/breadcrumbs';

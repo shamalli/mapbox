@@ -1,0 +1,7 @@
+<div class="w2mb-demo-prev-next-demos">
+<span class="w2mb-demo-prev-demo">Prev demo: <a href="[base_url]/full-screen-map/">Full Screen Map</a></span><span class="w2mb-demo-next-demo">Next demo: <a href="[base_url]/opened-listing/#w2mb-listing-{listing_id}">Opened listing</a></span>
+</div>
+
+Before GeoLocation request of your browser will be accepted or when automatic GeoLocation failed - we will start from Los Angeles, USA. And display all existing markers using AJAX loading.
+
+[mapbox id={map_id}]

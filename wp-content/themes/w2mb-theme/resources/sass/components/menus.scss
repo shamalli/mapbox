@@ -1,0 +1,169 @@
+#main-nav {
+    float: right;
+}
+.main-navigation ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.main-navigation ul ul {
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 2px $border-color;
+    left: -9999px;
+    margin: 0;
+    min-width: 250px;
+    position: absolute;
+    top: 60px;
+    opacity: 0;
+    z-index: -9999;
+    transition: opacity 0.2s ease-in-out 0s;
+    /* padding-top: 10px;
+    padding-bottom: 10px; */
+}
+
+.main-navigation ul ul ul {
+    left: 100%;
+    top: 0;
+    box-shadow: 2px 1px 2px $border-color;
+}
+
+.main-navigation li {
+    position: relative;
+    display: inline-block;
+    margin-bottom:0;
+    float: left;
+}
+
+.main-navigation ul > li:hover > ul {
+    opacity: 1;
+    left:0;
+    z-index: 9999;
+}
+
+.main-navigation ul ul ul ul  {
+    display: none;
+}
+
+.main-navigation ul ul ul li:hover > ul {
+    display: block;
+}
+
+.main-navigation ul ul li:hover > ul {
+    opacity: 1;
+    left:100%;
+}
+
+.main-navigation li li {
+    float: none;
+    display: block;
+    padding: 0;
+}
+.main-navigation li li a {
+	padding: 0 25px;
+}
+
+.main-navigation ul li li:first-child > a {
+    border-left: none;
+}
+.main-navigation ul li a {
+    color: $nav-menu-color;
+    display: block;
+    font-size: 15px;
+    font-weight: normal;
+    padding: 20px 15px;
+    position: relative;
+}
+
+.main-navigation ul ul a {
+    border-bottom: 1px dashed $border-color;
+    border-left: medium none;
+    border-right: medium none;
+    transition: padding 0.2s ease-in-out 0s;
+    color: $nav-menu-color;
+    height: auto;
+    padding: 9px 0;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    font-weight: 200;
+}
+.main-navigation ul ul li:last-child > a {
+    border: none;
+}
+.main-navigation ul li.menu-item-has-children > a::after {
+    content: "\f107";
+    font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+    margin-left: 5px;
+    margin-right: 0;
+	display: inline-block;
+}
+.main-navigation ul ul li.menu-item-has-children > a::after {
+	float: right;
+}
+
+.main-navigation ul li li.menu-item-has-children > a::after {
+    content: "\f105";
+    top: 10px;
+}
+
+.main-navigation ul li.menu-item-has-childrenv > a {
+    padding-right: 30px;
+}
+
+
+.main-navigation .menu-toggle,
+.main-navigation .dropdown-toggle {
+    display: none;
+}
+
+#mobile-trigger {
+	display: none;
+}
+#mobile {
+	display: none;
+}
+@media screen and (max-width: 960px) {
+	#mobile-trigger {
+		text-align: center;
+		color: #FFFFFF;
+		background-color: #111;
+		display: block;
+		height: 50px;
+		padding: 3px;
+		margin: 0 auto;
+		font-size: 26px;
+		font-weight: bold;
+	}
+	#mobile {
+		background-color: #111;
+		box-shadow: 0 0 3px 2px rgba(0,0,0,0.3);
+	}
+	#mobile ul li {
+		clear: both;
+		list-style: none;
+	}
+	#mobile ul li a {
+		display: block;
+		color: #FFFFFF;
+		background-color: #300;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		margin: 2px 0;
+		padding: 6px 0 6px 8px;
+	}
+	#mobile ul li:first-child a {
+		margin-top: 0;
+	}
+	#mobile ul ul {
+		font-size: small;
+	}
+	#mobile ul ul li {
+		margin-left: 30px;
+	}
+	#mobile ul ul a {
+		background-color: #333;
+		padding-left: 8px;
+	}
+}

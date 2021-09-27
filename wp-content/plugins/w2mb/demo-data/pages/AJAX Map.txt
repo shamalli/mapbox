@@ -1,0 +1,9 @@
+<div class="w2mb-demo-prev-next-demos">
+<span class="w2mb-demo-prev-demo">Prev demo: <a href="[base_url]/search-map/">Search + Map</a></span><span class="w2mb-demo-next-demo">Next demo: <a href="[base_url]/full-screen-map/">Full Screen Map</a></span>
+</div>
+
+Display all existing markers using AJAX loading, start from Los Angeles, USA.
+
+Main feature of this page: the map loads only needed map markers, those visible in the viewport of the map. Each drag or zoom changing of the map loads new markers. This effect due to ajax_loading=1 parameter in the map shortcode. ajax_markers_loading=1 parameter gives an ability to load marker info window after the click on marker. All these effects give increase of performance and allow to process thousands of markers.
+
+[mapbox id={map_id}]

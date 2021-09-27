@@ -1,0 +1,33 @@
+<div class="w2mb-demo-prev-next-demos">
+<span class="w2mb-demo-prev-demo">Prev demo: <a href="[base_url]/markers-of-one-category/">Markers of One Category</a></span><span class="w2mb-demo-next-demo">Next demo: <a href="[base_url]/mapbox-locator-plugin/">Home page</a></span>
+</div>
+
+Default
+[mapbox id={map_id} map_style="Streets"]
+
+OutDoors
+[mapbox id={map_id} map_style="OutDoors"]
+
+Light
+[mapbox id={map_id} map_style="Light"]
+
+Dark
+[mapbox id={map_id} map_style="Dark"]
+
+Satellite
+[mapbox id={map_id} map_style="Satellite"]
+
+Satellite streets
+[mapbox id={map_id} map_style="Satellite streets"]
+
+Navigation preview day
+[mapbox id={map_id} map_style="Navigation preview day"]
+
+Navigation preview night
+[mapbox id={map_id} map_style="Navigation preview night"]
+
+Navigation guidance day
+[mapbox id={map_id} map_style="Navigation guidance day"]
+
+Navigation guidance night
+[mapbox id={map_id} map_style="Navigation guidance night"]

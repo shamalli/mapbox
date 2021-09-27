@@ -1,0 +1,86 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+body {
+	font-size: 14px;
+}
+.main-navigation ul li a {
+	font-family: 'Roboto', sans-serif;
+}
+.main-navigation ul li a {
+	font-size: 16px;
+}
+.main-navigation ul li a {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+h1, .w2mb-content h1,
+h2, .w2mb-content h2,
+h3, .w2mb-content h3,
+h4, .w2mb-content h4,
+h5, .w2mb-content h5,
+h6, .w2mb-content h6 {
+	font-family: 'Roboto', sans-serif;
+}
+.site-header,
+.main-navigation ul ul {
+	background-color: #FFFFFF;
+}
+.site-header,
+.main-navigation,
+.main-navigation ul li a {
+	color: #000000;
+}
+.page-header {
+	padding: 80px 0;
+}
+.page-header {
+	background-color: #00A6C9;
+}
+.page-header,
+.page-header h1,
+.page-header a,
+.page-header a:hover,
+.page-header a:focus,
+.page-header a:visited {
+	color: #FFFFFF;
+}
+a,
+a:focus,
+a:visited,
+.main-navigation li.current-menu-item > a,
+.main-navigation li.current_page_item > a {
+	color: #009BC1;
+}
+a:hover,
+.main-navigation li:hover > a {
+	color: #00A6C9;
+}
+button,
+a.button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.woocommerce #respond input#submit,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button {
+	background-color: #009BC1;
+	color: #FFFFFF;
+}
+button:hover,
+a.button:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.woocommerce #respond input#submit:hover,
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover {
+	background-color: #00A6C9;
+	color: #FFFFFF;
+}
+
+.site-branding {
+	max-width: 250px;
+}

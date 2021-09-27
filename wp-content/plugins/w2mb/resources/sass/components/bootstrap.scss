@@ -1,0 +1,96 @@
+/************************   Bootstrap Additional CSS rules   ************************/
+.w2mb-content {
+	.w2mb-form-control,
+	.w2mb-form-control:focus {
+		width: 100%;
+		max-width: 100%;
+		float: none;
+		color: $input-color;
+		border: $input-border-width solid $input-border-color;
+		border-radius: $input-border-radius;
+		height: $input-height;
+		font-size: $input-font-size;
+		box-shadow: none !important;
+		padding: $input-padding;
+	}
+	textarea.w2mb-form-control,
+	textarea.w2mb-form-control:focus {
+		height: auto;
+	}
+	input.w2mb-form-control::-webkit-input-placeholder {
+		color: $input-placeholder-color;
+	}
+	input.w2mb-form-control::-moz-placeholder {
+		color: $input-placeholder-color;
+	}
+	input.w2mb-form-control:-moz-placeholder {
+		color: $input-placeholder-color;
+	}
+	input.w2mb-form-control:-ms-input-placeholder {
+		color: $input-placeholder-color;
+	}
+	.w2mb-form-horizontal .w2mb-control-label {
+		text-align: left;
+		margin: 0;
+		padding: 0;
+	}
+	.w2mb-has-feedback .w2mb-form-control:focus {
+		padding-right: 42.5px;
+	}
+	.w2mb-form-control-feedback {
+		z-index: 0;
+		display: inline;
+		top: 0;
+		cursor: pointer;
+		height: 100%;
+		line-height: $input-height;
+	}
+	.w2mb-label {
+		display: inline-block;
+		padding: 3px 5px;
+		margin-bottom: 3px;
+		vertical-align: inherit;
+	}
+	.w2mb-form-control-feedback.w2mb-glyphicon {
+		color: $input-placeholder-color;
+		font-size: 18px;
+	}
+	.w2mb-form-group {
+		margin-bottom: 15px !important; /* !important needed so JS COmposer can not break this by his *:last-child rules */
+		overflow: hidden;
+	}
+	.w2mb-nav-tabs > li.w2mb-active > a,
+	.w2mb-nav-tabs > li.w2mb-active > a:hover,
+	.w2mb-nav-tabs > li.w2mb-active > a:focus {
+		cursor: pointer;
+	}
+	.w2mb-popover {
+		max-width: 500px;
+	}
+	.w2mb-list-group {
+		margin-left: 0;
+	}
+	@media print {
+		a[href]:after {
+			content: none !important;
+		}
+	}
+	.w2mb-tooltip-inner {
+		background-color: #3b3b3b;
+		border-radius: 2px;
+		padding: 10px;
+	}
+	.w2mb-tooltip.w2mb-top .w2mb-tooltip-arrow {
+		border-top-color: #3b3b3b;
+	}
+	.w2mb-tooltip.w2mb-in {
+		opacity: 1;
+	}
+	.w2mb-btn-default:hover {
+		background-color: $label-background-color;
+	}
+	input[type="checkbox"],
+	input[type="radio"] {
+		position: relative;
+	}
+}

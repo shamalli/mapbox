@@ -1,0 +1,7 @@
+<div class="w2mb-demo-prev-next-demos">
+<span class="w2mb-demo-prev-demo">Prev demo: <a href="[base_url]/clusters/">Clusters</a></span><span class="w2mb-demo-next-demo">Next demo: <a href="[base_url]/directions/">Directions</a></span>
+</div>
+
+Display all markers of listings within 30 miles from Los Angeles.
+
+[mapbox id={map_id}]

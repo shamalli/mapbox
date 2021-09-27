@@ -1,0 +1,20 @@
+label.w2mb-rating-icon {
+	float: left;
+	padding-right: 2px;
+	padding-left: 0;
+}
+label.w2mb-rating-icon.w2mb-fa-star-half-o {
+	-moz-transform: scaleX(-1);    /* Gecko */
+	-o-transform: scaleX(-1);      /* Opera */
+	-webkit-transform: scaleX(-1); /* Webkit */
+	transform: scaleX(-1);         /* Standard */
+	filter: FlipH;                 /* IE 6/7/8 */
+}
+.w2mb-rating-icon:last-child {
+	padding-right: 0;
+}
+.w2mb-rating-avgvalue {
+	float: left;
+	margin-right: 5px;
+	margin-left: 0;
+}

@@ -1,0 +1,103 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after { /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+    box-sizing: inherit;
+}
+
+body {
+    background-color: #fff; /* Fallback for when there is no custom background color defined. */
+    word-wrap: break-word;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+    content: "";
+}
+
+blockquote,
+q {
+    quotes: "" "";
+}
+
+hr {
+    background-color: $border-color;
+    border: 0;
+    height: 2px;
+    margin: 40px 0;
+}
+
+
+ul {
+    list-style: disc;
+}
+
+ol {
+    list-style: decimal;
+}
+
+li > ul,
+li > ol {
+    margin-bottom: 0;
+    margin-left: 1.5em;
+}
+
+ul, ol {
+    margin: 0 0 1.5em 1em;
+    padding: 0;
+}
+ul > li,
+ol > li {
+    margin: 0 0 0.5em 0;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    margin: 0 1.5em 1.5em;
+}
+
+img {
+    height: auto; /* Make sure images are scaled correctly. */
+    max-width: 100%; /* Adhere to container width. */
+}
+
+table {
+    margin: 0 0 1.5em;
+    width: 100%;
+    table-layout: fixed;
+}
+
+
+td, th {
+    border: 1px solid $border-color;
+    padding: 5px;
+}
+td.td-center {
+	text-align: center;
+}
+th.th-description {
+	width: 51%;
+}
+th {
+	background-color: #F6F6F6;
+}
+
+a {
+    text-decoration: none;
+	cursor: pointer;
+}
+a:focus {
+    outline: inherit;
+}
+a:hover,
+a:active {
+    outline: 0;
+}

@@ -1,0 +1,72 @@
+.w2mb-rating {
+	font-size: 18px;
+	display: inline-block;
+	margin: 5px 0;
+	vertical-align: middle;
+}
+.w2mb-dashboard-listings .w2mb-rating {
+	margin-left: 10px;
+}
+.w2mb-rating-stars {
+	overflow: hidden;
+}
+.w2mb-maps-canvas .w2mb-rating-icon {
+	font-size: 18px !important;
+}
+label.w2mb-rating-icon {
+	margin: 0;
+	float: right;
+	color: $rating-star-color;
+	padding-left: 2px;
+	font-size: 20px;
+	font-weight: normal;
+}
+.w2mb-rating-active label.w2mb-rating-icon {
+	cursor: pointer;
+}
+.w2mb-rating-icon:last-child {
+	padding-left: 0;
+}
+.w2mb-rating-active {
+	.w2mb-rating-icon:hover:before,
+	.w2mb-rating-icon:hover ~ .w2mb-rating-icon:before {
+		content: "\f005" !important;
+		color: $rating-star-hover-color;
+	}
+	&.w2mb-rating-stars:hover .w2mb-rating-icon:before {
+		content: "\f006";
+	}
+}
+.w2mb-rating-avgvalue {
+	display: block;
+	position: relative;
+	top: -2px;
+	float: right;
+	margin-left: 5px;
+}
+.w2mb-rating-avgvalue span {
+	border-radius: 50%;
+	color: #fff;
+	display: block;
+	font-family: Arial !important;
+	font-size: 11px !important;
+	padding: 5px;
+	line-height: 15px;
+	background-color: $primary-color;
+	text-align: center;
+}
+
+.w2mb-admin-rating {
+	margin: 10px 0;
+}
+.w2mb-admin-stars {
+	width: 80px;
+	display: inline-block;
+}
+
+.w2mb-dropdowns-menu-search .w2mb-rating {
+	margin: 0;
+}
+.w2mb-dropdowns-menu-search label.w2mb-rating-icon {
+	font-size: 16px;
+}
