@@ -318,13 +318,6 @@ class w2mb_content_fields {
 				}
 			}
 			
-			// address field always will be the first
-			if (isset($this->map_content_fields['address'])) {
-				$address_field = $this->map_content_fields['address'];
-				unset($this->map_content_fields['address']);
-				$this->map_content_fields = array('address' => $address_field) + $this->map_content_fields;
-			}
-			
 			$this->map_content_fields = apply_filters('w2mb_map_info_window_fields', $this->map_content_fields);
 		}
 		
@@ -606,6 +599,8 @@ class w2mb_content_field {
 				|| $_POST['slug'] == 'distance'
 				|| $_POST['slug'] == 'user'
 				|| $_POST['slug'] == 'zip_or_postal_index'
+				|| $_POST['slug'] == 'place_id'
+				|| $_POST['slug'] == 'keywords'
 			)
 				$validation->setError('slug', esc_attr__("Can't use this slug", 'W2MB'));
 		}

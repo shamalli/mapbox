@@ -238,7 +238,6 @@ function w2mb_install_maps() {
 		add_option('w2mb_map_marker_anchor_x', 24);
 		add_option('w2mb_map_marker_anchor_y', 48);
 		add_option('w2mb_map_infowindow_width', 350);
-		add_option('w2mb_map_infowindow_offset', 50);
 		add_option('w2mb_map_infowindow_logo_width', 110);
 		add_option('w2mb_orderby_exclude_null', 0); // Exclude listings with empty values from sorted results
 		add_option('w2mb_admin_notifications_email', get_option('admin_email'));
@@ -252,7 +251,7 @@ function w2mb_install_maps() {
 		add_option('w2mb_address_autocomplete', 1);
 		add_option('w2mb_address_geocode', 0);
 		add_option('w2mb_enable_recaptcha');
-		add_option('w2mb_recaptcha_version', 'v2');
+		add_option('w2mb_recaptcha_version', 'v3');
 		add_option('w2mb_recaptcha_public_key');
 		add_option('w2mb_recaptcha_private_key');
 		add_option('w2mb_compare_palettes', 0);
@@ -280,6 +279,8 @@ function w2mb_install_maps() {
 		add_option('w2mb_marker_anchor', 'w2mb-marker');
 		add_option('w2mb_listing_anchor', 'w2mb-listing');
 		add_option('w2mb_exclude_logo_from_listing', 0);
+		add_option('w2mb_zip_or_postal_text', "zip");
+		add_option('w2mb_images_submit_required', 0);
 	
 		add_option('w2mb_installed_maps', true);
 		add_option('w2mb_installed_maps_version', W2MB_VERSION);
@@ -287,6 +288,7 @@ function w2mb_install_maps() {
 	} elseif (get_option('w2mb_installed_maps_version') != W2MB_VERSION) {
 		$upgrades_list = array(
 				'1.0.9',
+				'1.0.13',
 		);
 
 		$old_version = get_option('w2mb_installed_maps_version');
@@ -312,7 +314,12 @@ function w2mb_install_maps() {
 }
 
 function w2mb_upgrade_to_1_0_9() {
-	add_option('w2mb_recaptcha_version', 'v2');
+	add_option('w2mb_recaptcha_version', 'v3');
+}
+
+function w2mb_upgrade_to_1_0_13() {
+
+	add_option('w2mb_images_submit_required', 0);
 }
 
 ?>

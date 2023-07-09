@@ -6,19 +6,21 @@ class SC_Admin{
 
     public static function init(){
         
-        add_action( 'init', array( __class__, 'register_post_type' ), 0 );
+        add_action( 'init', array( __CLASS__, 'register_post_type' ), 0 );
 
-        add_action( 'init', array( __class__, 'register_taxonomy' ), 0 );
+        add_action( 'init', array( __CLASS__, 'register_taxonomy' ), 0 );
 
-        add_action( 'admin_enqueue_scripts', array( __class__, 'enqueue_scripts' ) );
+        add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_scripts' ) );
 
-        add_action( 'admin_footer', array( __class__, 'changelog' ) );
+        add_action( 'admin_footer', array( __CLASS__, 'changelog' ) );
 
-        add_action( 'admin_footer', array( __class__, 'import_export' ) );
+        add_action( 'admin_footer', array( __CLASS__, 'import_export' ) );
 
-        add_action( 'wp_ajax_sc_admin_ajax', array( __class__, 'admin_ajax' ) );
+        add_action( 'wp_ajax_sc_admin_ajax', array( __CLASS__, 'admin_ajax' ) );
 
         add_filter( 'plugin_action_links_' . SC_BASE_NAME, array( __CLASS__, 'action_links' ) );
+
+        add_action( 'admin_menu', array( __CLASS__, 'upgrade_menu' ), 15 );
 
     }
 
@@ -54,7 +56,7 @@ class SC_Admin{
             'filter_items_list'     => __( 'Filter shortcodes list', 'shortcoder' ),
         );
 
-        $args = array(
+        $args = apply_filters( 'sc_mod_post_type_args', array(
             'label'                 => __( 'Shortcode', 'shortcoder' ),
             'labels'                => $labels,
             'supports'              => false,
@@ -74,7 +76,7 @@ class SC_Admin{
             'show_in_rest'          => false,
             'map_meta_cap'          => true,
             'capability_type'       => 'shortcoder',
-        );
+        ));
 
         register_post_type( SC_POST_TYPE, $args );
 
@@ -131,6 +133,22 @@ class SC_Admin{
 
     }
 
+    public static function is_edit_page( $new_edit = null ){
+
+        global $pagenow;
+
+        if (!is_admin()) return false;
+
+        if( $new_edit == 'edit' ){
+            return in_array( $pagenow, array( 'post.php' ) );
+        }elseif( $new_edit == 'new' ){
+            return in_array( $pagenow, array( 'post-new.php' ) );
+        }else{
+            return in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
+        }
+
+    }
+
     public static function inline_js_variables(){
 
         return array(
@@ -146,7 +164,7 @@ class SC_Admin{
 
         wp_enqueue_style( 'sc-icon-css', SC_ADMIN_URL . 'css/menu-icon.css', array(), SC_VERSION );
 
-        if( !self::is_sc_admin_page() ){
+        if( !self::is_sc_admin_page() || $hook == 'shortcoder_page_settings' ){
             return false;
         }
 
@@ -198,8 +216,8 @@ class SC_Admin{
         }
 
         echo '<div class="sc_changelog"><main>
-        <article>' . $changelog . '</article>
-        <footer><button href="#" class="button button-primary dismiss_btn">' . __( 'Continue using Shortcoder', 'shortcoder' ) . '</a></footer>
+        <article>' . wp_kses_post( $changelog ) . '</article>
+        <footer><button href="#" class="button button-primary dismiss_btn">' . esc_html__( 'Continue using Shortcoder', 'shortcoder' ) . '</a></footer>
         </main></div>';
 
     }
@@ -220,24 +238,24 @@ class SC_Admin{
 <div id="contextual-help-columns">
     <div class="contextual-help-tabs">
         <ul>
-            <li class="active"><a href="#export-tab" aria-controls="export-tab">' . __( 'Export', 'shortcoder' ) . '</a></li>
-            <li><a href="#import-tab" aria-controls="import-tab">' . __( 'Import', 'shortcoder' ) . '</a></li>
-            <li><a href="#import-others-tab" aria-controls="import-others-tab">' . __( 'Import from other sources', 'shortcoder' ) . '</a></li>
+            <li class="active"><a href="#export-tab" aria-controls="export-tab">' . esc_html__( 'Export', 'shortcoder' ) . '</a></li>
+            <li><a href="#import-tab" aria-controls="import-tab">' . esc_html__( 'Import', 'shortcoder' ) . '</a></li>
+            <li><a href="#import-others-tab" aria-controls="import-others-tab">' . esc_html__( 'Import from other sources', 'shortcoder' ) . '</a></li>
         </ul>
     </div>
-    <div class="contextual-help-sidebar"><p><a href="https://www.aakashweb.com/docs/shortcoder-doc/" target="_blank">' . __( 'Documentation', 'shortcoder' ) . '</a></p></div>
+    <div class="contextual-help-sidebar"><p><a href="https://www.aakashweb.com/docs/shortcoder/" target="_blank">' . esc_html__( 'Documentation', 'shortcoder' ) . '</a></p></div>
     <div class="contextual-help-tabs-wrap">
         <div id="export-tab" class="help-tab-content active">
-        <h3>' . __( 'Export', 'shortcoder' ) . '</h3><p>' . __( 'WordPress has a native exporter tool which can be used to export shortcoder data. Navigate to <code>Tools -> Export</code> and select "Shortcoder" as the content to export.', 'shortcoder' ) . '</p>
-        <a href="' . admin_url( 'export.php' ) . '" class="button button-primary">' . __( 'Go to export page', 'shortcoder' ) . '</a>
+        <h3>' . esc_html__( 'Export', 'shortcoder' ) . '</h3><p>' . wp_kses( __( 'WordPress has a native exporter tool which can be used to export shortcoder data. Navigate to <code>Tools -> Export</code> and select "Shortcoder" as the content to export.', 'shortcoder' ), array( 'code' => array() ) ) . '</p>
+        <a href="' . esc_url( admin_url( 'export.php' ) ) . '" class="button button-primary">' . esc_html__( 'Go to export page', 'shortcoder' ) . '</a>
         </div>
         <div id="import-tab" class="help-tab-content">
-        <h3>' . __( 'Import', 'shortcoder' ) . '</h3><p>' . __( 'The XML file downloaded through the native export process can be imported via WordPress\'s own import tool. Navigate to <code>Tools -> Import</code>, install the importer plugin if not installed and run the importer under WordPress section.', 'shortcoder' ) . '</p>
-        <a href="' . admin_url( 'import.php' ) . '" class="button button-primary">' . __( 'Go to import page', 'shortcoder' ) . '</a>
+        <h3>' . esc_html__( 'Import', 'shortcoder' ) . '</h3><p>' . wp_kses( __( 'The XML file downloaded through the native export process can be imported via WordPress\'s own import tool. Navigate to <code>Tools -> Import</code>, install the importer plugin if not installed and run the importer under WordPress section.', 'shortcoder' ), array( 'code' => array() ) ) . '</p>
+        <a href="' . esc_url( admin_url( 'import.php' ) ) . '" class="button button-primary">' . esc_html__( 'Go to import page', 'shortcoder' ) . '</a>
         </div>
         <div id="import-others-tab" class="help-tab-content">
-        <h3>' . __( 'Import from other sources', 'shortcoder' ) . '</h3><p>' . __( 'To import from other sources like CSV, excel please read the below linked documentation.', 'shortcoder' ) . '</p>
-        <a href="https://www.aakashweb.com/docs/shortcoder-doc/import-export/" target="_blank" class="button button-primary">' . __( 'Open documentation', 'shortcoder' ) . '</a>
+        <h3>' . esc_html__( 'Import from other sources', 'shortcoder' ) . '</h3><p>' . esc_html__( 'To import from other sources like CSV, excel please read the below linked documentation.', 'shortcoder' ) . '</p>
+        <a href="https://www.aakashweb.com/docs/shortcoder/import-export/" target="_blank" class="button button-primary">' . esc_html__( 'Open documentation', 'shortcoder' ) . '</a>
         </div>
     </div>
 </div>
@@ -246,8 +264,13 @@ class SC_Admin{
     }
 
     public static function action_links( $links ){
-        array_unshift( $links, '<a href="'. esc_url( admin_url( 'edit.php?post_type=shortcoder') ) .'">' . __( 'Manage shortcodes', 'shortcoder' ) . '</a>' );
+        array_unshift( $links, '<a href="'. esc_url( admin_url( 'edit.php?post_type=shortcoder') ) .'">' . esc_html__( 'View shortcodes', 'shortcoder' ) . '</a>' );
+        array_unshift( $links, '<a href="https://www.aakashweb.com/wordpress-plugins/shortcoder/?utm_source=admin&utm_medium=menu&utm_campaign=sc-pro#pro" target="_blank"><b>' . esc_html__( 'Upgrade to PRO', 'shortcoder' ) . '</b></a>' );
         return $links;
+    }
+
+    public static function upgrade_menu(){
+        add_submenu_page( 'edit.php?post_type=shortcoder', 'Shortcoder - Upgrade', '<span style="color: #ff8c29" class="sc_upgrade_link">Upgrade to PRO</span>', 'manage_options', 'https://www.aakashweb.com/wordpress-plugins/shortcoder/?utm_source=admin&utm_medium=menu&utm_campaign=sc-pro#pro', null );
     }
 
     public static function clean_get(){
@@ -257,6 +280,12 @@ class SC_Admin{
         }
 
         return $_GET;
+    }
+
+    public static function clean_post(){
+        
+        return stripslashes_deep( $_POST );
+        
     }
 
 }

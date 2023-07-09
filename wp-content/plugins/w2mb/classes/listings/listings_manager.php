@@ -119,8 +119,9 @@ class w2mb_listings_manager {
 			}
 
 			// If new listing
-			if (!$listing->expiration_date)
+			if (!$listing->expiration_date) {
 				$listing->expiration_date = w2mb_calcExpirationDate(current_time('timestamp'), $listing->level);
+			}
 			w2mb_renderTemplate('listings/change_date_metabox.tpl.php', array('listing' => $listing, 'dateformat' => w2mb_getDatePickerFormat()));
 		} else {
 			echo "<p>".esc_html__('Renew listing first!', 'W2MB')."</p>";
@@ -238,7 +239,7 @@ class w2mb_listings_manager {
 	
 	public function posts_filter_dropdown() {
 		global $pagenow, $w2mb_instance;
-		if ($pagenow === 'upload.php' || (isset($_GET['post_type']) && $_GET['post_type'] != W2MB_POST_TYPE))
+		if ($pagenow === 'upload.php' || empty($_GET['post_type']) || (isset($_GET['post_type']) && $_GET['post_type'] != W2MB_POST_TYPE))
 			return;
 
 		echo '<select name="w2mb_post_status_filter">';

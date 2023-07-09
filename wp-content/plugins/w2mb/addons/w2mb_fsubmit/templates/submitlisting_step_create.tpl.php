@@ -120,7 +120,7 @@
 			
 				<?php if ($listing->level->images_number > 0 || $listing->level->videos_number > 0): ?>
 				<div class="w2mb-submit-section w2mb-submit-section-media">
-					<h3 class="w2mb-submit-section-label"><?php esc_html_e('Listing Media', 'W2MB'); ?></h3>
+					<h3 class="w2mb-submit-section-label"><?php esc_html_e('Listing Media', 'W2MB'); ?><?php if (get_option('w2mb_images_submit_required')): ?><span class="w2mb-red-asterisk">*</span><?php endif; ?></h3>
 					<div class="w2mb-submit-section-inside">
 						<?php $w2mb_instance->media_manager->mediaMetabox($listing->post, array('args' => array('target' => 'listings'))); ?>
 					</div>

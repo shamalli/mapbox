@@ -4804,7 +4804,6 @@ a.w2mb-content .w2mb-thumbnail.w2mb-active {
 .w2mb-content .w2mb-media,
 .w2mb-content .w2mb-media-body {
   overflow: hidden;
-  zoom: 1;
 }
 .w2mb-content .w2mb-media,
 .w2mb-content .w2mb-media .w2mb-media {

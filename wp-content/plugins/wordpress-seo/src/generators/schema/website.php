@@ -1,9 +1,4 @@
 <?php
-/**
- * WPSEO plugin file.
- *
- * @package Yoast\WP\SEO\Generators\Schema
- */
 
 namespace Yoast\WP\SEO\Generators\Schema;
 
@@ -27,8 +22,6 @@ class Website extends Abstract_Schema_Piece {
 	 * Outputs code to allow recognition of the internal search engine.
 	 *
 	 * @return array Website data blob.
-	 *
-	 * @link https://developers.google.com/structured-data/site-name
 	 */
 	public function generate() {
 		$data = [
@@ -55,12 +48,11 @@ class Website extends Abstract_Schema_Piece {
 	 *
 	 * @param array $data The website data array.
 	 *
-	 * @return array $data
+	 * @return array
 	 */
 	private function add_alternate_name( $data ) {
-		$alternate_name = $this->helpers->options->get( 'alternate_website_name', '' );
-		if ( $alternate_name !== '' ) {
-			$data['alternateName'] = $this->helpers->schema->html->smart_strip_tags( $alternate_name );
+		if ( $this->context->alternate_site_name !== '' ) {
+			$data['alternateName'] = $this->helpers->schema->html->smart_strip_tags( $this->context->alternate_site_name );
 		}
 
 		return $data;
@@ -69,11 +61,11 @@ class Website extends Abstract_Schema_Piece {
 	/**
 	 * Adds the internal search JSON LD code to the homepage if it's not disabled.
 	 *
-	 * @link https://developers.google.com/structured-data/slsb-overview
+	 * @link https://developers.google.com/search/docs/data-types/sitelinks-searchbox
 	 *
 	 * @param array $data The website data array.
 	 *
-	 * @return array $data
+	 * @return array
 	 */
 	private function internal_search_section( $data ) {
 		/**
@@ -94,7 +86,10 @@ class Website extends Abstract_Schema_Piece {
 
 		$data['potentialAction'][] = [
 			'@type'       => 'SearchAction',
-			'target'      => $search_url,
+			'target'      => [
+				'@type'       => 'EntryPoint',
+				'urlTemplate' => $search_url,
+			],
 			'query-input' => 'required name=search_term_string',
 		];
 

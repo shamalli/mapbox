@@ -18,6 +18,7 @@ class w2mb_listing {
 	public $is_claimable;
 	public $claim;
 	public $contact_email;
+	public $avg_rating;
 
 	public function __construct() {
 		$this->setLevel();
@@ -475,7 +476,7 @@ class w2mb_listing {
 	public function title() {
 		$title = get_the_title($this->post);
 		
-		$is_map = apply_filters('w2mb_listing_title', $title, $this);
+		$title = apply_filters('w2mb_listing_title', $title, $this);
 		
 		return $title;
 	}
@@ -717,7 +718,6 @@ class w2mb_listing {
 	public function renderMapSidebarContentFields($location) {
 		$info_output = '';
 		$fields_output = '';
-		$addresses_output = '';
 		
 		if ($location->renderInfoFieldForMap()) {
 			$info_output = '<div class="w2mb-map-listing-field">
@@ -739,26 +739,25 @@ class w2mb_listing {
 						$fields_output .= $content_field->renderOutputForMap($location, $this);
 					$fields_output .= '</div>';
 				} else {
-					$addresses_output = '<div class="w2mb-map-listing-field w2mb-map-listing-field-' . esc_attr($content_field->type) . '">';
+					$fields_output .= '<div class="w2mb-map-listing-field w2mb-map-listing-field-' . esc_attr($content_field->type) . '">';
 						if (is_a($content_field, 'w2mb_content_field') && $content_field->icon_image) {
-							$addresses_output .= '<span class="w2mb-map-listing-field-icon w2mb-fa ' . esc_attr($content_field->icon_image) . '"></span>';
+							$fields_output .= '<span class="w2mb-map-listing-field-icon w2mb-fa ' . esc_attr($content_field->icon_image) . '"></span>';
 						}
-						$addresses_output .= '<address class="w2mb-location">';
+						$fields_output .= '<address class="w2mb-location">';
 							if ($location->map_coords_1 && $location->map_coords_2) {
-								$addresses_output .= '<span class="w2mb-show-on-map" data-location-id="' . esc_attr($location->id) . '">';
+								$fields_output .= '<span class="w2mb-show-on-map" data-location-id="' . esc_attr($location->id) . '">';
 							}
-							$addresses_output .= $location->getWholeAddress();
+							$fields_output .= $location->getWholeAddress();
 							if ($location->map_coords_1 && $location->map_coords_2) {
-								$addresses_output .= '</span>';
+								$fields_output .= '</span>';
 							}
-						$addresses_output .= '</address>';
-					$addresses_output .= '</div>';
+						$fields_output .= '</address>';
+					$fields_output .= '</div>';
 				}
 			}
 		}
 		
 		echo $info_output;
-		echo $addresses_output;
 		echo $fields_output;
 	}
 

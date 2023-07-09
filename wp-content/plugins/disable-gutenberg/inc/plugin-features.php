@@ -59,6 +59,8 @@ add_action('admin_menu', 'disable_gutenberg_add_submenus');
 
 function disable_gutenberg_page_row_actions($actions, $post) {
 	
+	if (disable_gutenberg()) return $actions;
+	
 	if (!disable_gutenberg_enable_features()) return $actions;
 	
 	if (disable_gutenberg_whitelist($post->ID)) return $actions;
@@ -165,7 +167,7 @@ function disable_gutenberg_edit_form_top() {
 	
 	?>
 	
-	<input type="hidden" name="classic-editor" value="" />
+	<input type="hidden" name="classic-editor" value="1">
 	
 	<?php
 	

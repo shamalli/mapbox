@@ -5,11 +5,11 @@ class SC_Admin_Manage{
 
     public static function init(){
 
-        add_filter( 'manage_' . SC_POST_TYPE . '_posts_columns', array( __class__, 'column_head' ) );
+        add_filter( 'manage_' . SC_POST_TYPE . '_posts_columns', array( __CLASS__, 'column_head' ) );
 
-        add_action( 'manage_' . SC_POST_TYPE . '_posts_custom_column', array( __class__, 'column_content' ), 10, 2 );
+        add_action( 'manage_' . SC_POST_TYPE . '_posts_custom_column', array( __CLASS__, 'column_content' ), 10, 2 );
 
-        add_filter( 'edit_posts_per_page', array( __class__, 'per_page_count' ), 10, 2 );
+        add_filter( 'edit_posts_per_page', array( __CLASS__, 'per_page_count' ), 10, 2 );
 
     }
 
@@ -17,9 +17,17 @@ class SC_Admin_Manage{
 
         unset( $columns[ 'views' ] );
 
-        $columns[ 'shortcode' ] = __( 'Shortcode', 'sc');
+        $new_columns = array();
 
-        return $columns;
+        foreach( $columns as $id => $val ){
+            if( $id == 'taxonomy-sc_tag' ){
+                $new_columns[ 'shortcode' ] = __( 'Shortcode', 'sc');
+                $new_columns[ 'desc' ] = __( 'Description', 'sc');
+            }
+            $new_columns[$id] = $val;
+        }
+
+        return $new_columns;
 
     }
 
@@ -27,7 +35,12 @@ class SC_Admin_Manage{
 
         if( $column == 'shortcode' ){
             $sc_tag = Shortcoder::get_sc_tag( $post_id );
-            echo '<code>' . $sc_tag . '</code>';
+            echo '<span class="sc_copy_list_wrap"><input type="text" class="widefat sc_copy_text" readonly value="' . esc_attr( $sc_tag ) . '" /><a href="#" class="sc_copy_list" title="' . esc_attr__( 'Copy', 'shortcoder' ) . '"><span class="dashicons dashicons-clipboard"></span></a></span>';
+        }
+
+        if( $column == 'desc' ){
+            $sc_settings = Shortcoder::get_sc_settings( $post_id );
+            echo esc_html( $sc_settings[ '_sc_description' ] );
         }
 
     }

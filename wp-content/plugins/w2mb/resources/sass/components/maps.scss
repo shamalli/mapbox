@@ -8,6 +8,9 @@
 	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;
 }
+.w2mb-maps-canvas .mapboxgl-popup-close-button {
+	display: none;
+}
 .w2mb-maps-canvas-wrapper {
 	position: relative;
 	overflow: hidden;
@@ -84,6 +87,7 @@
 .w2mb-map-info-window-buttons,
 .w2mb-map-info-window-buttons-single {
 	padding: 5px;
+	clear: both;
 }
 .w2mb-map-listings-panel .w2mb-map-info-window-buttons,
 .w2mb-map-listings-panel .w2mb-map-info-window-buttons-single {
@@ -438,6 +442,21 @@ div.w2mb-map-locations-counter-bar {
 	}
 	.w2mb-sidebar-open .w2mb-map-sidebar-toggle-container-mobile .w2mb-map-sidebar-toggle {
 		transform: rotate(90deg);
+	}
+	
+	/* Categories search field still visible on full screen */
+	.w2mb-map-full-screen .w2mb-map-search-form {
+		display: block;
+	}
+	.w2mb-map-full-screen .w2mb-map-search-panel-wrapper,
+	.w2mb-map-full-screen .w2mb-map-listings-panel {
+		display: none;
+	}
+	.w2mb-map-full-screen .w2mb-map-search-input-container {
+		width: 75%;
+	}
+	.w2mb-map-full-screen .w2mb-map-search-wrapper {
+		position: fixed;
 	}
 }
 /* It works with devices width more than 768 pixels. */

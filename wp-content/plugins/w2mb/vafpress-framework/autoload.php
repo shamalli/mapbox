@@ -123,7 +123,10 @@ class VP_W2MB_AutoLoader
 	{
 		self::$namespaces = array_merge(self::$namespaces, (array) $namespaces);
 		self::$namespaces = array_unique(self::$namespaces);
-		usort(self::$namespaces, array('self', 'sort'));
+		
+		usort(self::$namespaces, function ($a, $b) {
+			return strlen($b) - strlen($a);
+		});
 	}
 
 	/**

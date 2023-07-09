@@ -4,7 +4,7 @@
 	<?php esc_html_e('Maps Debug', 'W2MB'); ?>
 </h2>
 
-<textarea class="w2mb-debug-textarea">
+<textarea style="width: 100%; height: 700px">
 geolocation response = <?php var_dump($geolocation_response); ?>
 
 
@@ -22,11 +22,14 @@ $w2mb_instance->submit_page = <?php var_dump($w2mb_instance->submit_page); ?>
 $w2mb_instance->dashboard_page_id = <?php echo $w2mb_instance->dashboard_page_id; ?>
 <?php endif; ?>
 
-<?php foreach ($rewrite_rules AS $key=>$rule)
+<?php
+if ($rewrite_rules):
+foreach ($rewrite_rules AS $key=>$rule)
 echo $key . '
 ' . $rule . '
 
 ';
+endif;
 ?>
 
 image_sizes = <?php var_dump(w2mb_get_registered_image_sizes()); ?>

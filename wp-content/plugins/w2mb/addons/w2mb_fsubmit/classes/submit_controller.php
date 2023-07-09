@@ -1,7 +1,10 @@
 <?php 
 
 class w2mb_submit_controller extends w2mb_frontend_controller {
+	
 	public $template_args = array();
+	public $w2mb_user_contact_name;
+	public $w2mb_user_contact_email;
 
 	public function init($args = array()) {
 		global $w2mb_instance, $w2mb_fsubmit_instance;
@@ -282,6 +285,7 @@ class w2mb_submit_controller extends w2mb_frontend_controller {
 								$w2mb_instance->listings_manager->changeExpirationDate();
 							else {
 								$expiration_date = w2mb_calcExpirationDate(current_time('timestamp'), $listing->level);
+								var_dump($expiration_date);
 								add_post_meta($listing->post->ID, '_expiration_date', $expiration_date);
 							}
 						}

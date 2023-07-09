@@ -1,17 +1,14 @@
 <?php
-/**
- * The abstract presentation class.
- *
- * @package Yoast\YoastSEO\Presentations
- */
 
 namespace Yoast\WP\SEO\Presentations;
 
+use AllowDynamicProperties;
 use Exception;
 
 /**
- * Class Abstract_Presentation
+ * The abstract presentation class.
  */
+#[AllowDynamicProperties]
 class Abstract_Presentation {
 
 	/**
@@ -65,7 +62,7 @@ class Abstract_Presentation {
 			throw new Exception( 'Attempting property access on prototype presentation. Use Presentation::of( $data ) to get a model presentation.' );
 		}
 		$generator = "generate_$name";
-		if ( method_exists( $this, $generator ) ) {
+		if ( \method_exists( $this, $generator ) ) {
 			$this->{$name} = $this->$generator();
 			return $this->{$name};
 		}
@@ -75,22 +72,22 @@ class Abstract_Presentation {
 	/**
 	 * Magic isset for ensuring methods that have a generator are recognised.
 	 *
+	 * @codeCoverageIgnore Wrapper method.
+	 *
 	 * @param string $name The property to get.
 	 *
 	 * @return bool Whether or not there is a generator for the requested property.
-	 *
-	 * @codeCoverageIgnore Wrapper method.
 	 */
 	public function __isset( $name ) {
-		return method_exists( $this, "generate_$name" );
+		return \method_exists( $this, "generate_$name" );
 	}
 
 	/**
 	 * Returns `true` if this class is a prototype.
 	 *
-	 * @return bool If this class is a prototype or not.
-	 *
 	 * @codeCoverageIgnore Wrapper method.
+	 *
+	 * @return bool If this class is a prototype or not.
 	 */
 	protected function is_prototype() {
 		return $this->is_prototype;

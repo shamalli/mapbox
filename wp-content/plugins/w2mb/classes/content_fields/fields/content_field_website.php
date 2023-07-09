@@ -25,9 +25,9 @@ class w2mb_content_field_website extends w2mb_content_field {
 			$validation = new w2mb_form_validation();
 			$validation->set_rules('is_blank', esc_html__('Open link in new window', 'W2MB'), 'is_checked');
 			$validation->set_rules('is_nofollow', esc_html__('Add nofollow attribute', 'W2MB'), 'is_checked');
-			$validation->set_rules('use_link_text', esc_html__('Default link text', 'W2MB'), 'is_checked');
-			$validation->set_rules('default_link_text', esc_html__('Default link text', 'W2MB'));
-			$validation->set_rules('use_default_link_text', esc_html__('Use default link text', 'W2MB'), 'is_checked');
+			$validation->set_rules('use_link_text', esc_html__('Placeholder link text', 'W2MB'), 'is_checked');
+			$validation->set_rules('default_link_text', esc_html__('Placeholder link text', 'W2MB'));
+			$validation->set_rules('use_default_link_text', esc_html__('Use placeholder link text', 'W2MB'), 'is_checked');
 			if ($validation->run()) {
 				$result = $validation->result_array();
 				if ($wpdb->update($wpdb->w2mb_content_fields, array('options' => serialize(array('is_blank' => $result['is_blank'], 'is_nofollow' => $result['is_nofollow'], 'use_link_text' => $result['use_link_text'], 'default_link_text' => $result['default_link_text'], 'use_default_link_text' => $result['use_default_link_text']))), array('id' => $this->id), null, array('%d')))
@@ -66,7 +66,7 @@ class w2mb_content_field_website extends w2mb_content_field {
 	}
 	
 	public function renderInput() {
-		// Default link text
+		// Placeholder link text
 		if ($this->value['text'] == '')
 			$this->value['text'] = $this->default_link_text;
 
@@ -112,7 +112,7 @@ class w2mb_content_field_website extends w2mb_content_field {
 			$this->value['url'] = '';
 		}
 		
-		// Default link text
+		// Placeholder link text
 		if (empty($this->value['text']) && $this->use_default_link_text) {
 			$this->value['text'] = $this->default_link_text;
 		}

@@ -233,6 +233,12 @@ class w2mb_media_manager {
 		if ($this->params['images_number'] || $this->params['videos_number']) {
 			$validation = new w2mb_form_validation();
 			if ($this->params['images_number']) {
+				if (get_option('w2mb_images_submit_required')) {
+					$required = 'required';
+				} else {
+					$required = '';
+				}
+				$validation->set_rules('attached_image_id[]', __('Attached images', 'W2MB'), $required);
 				$validation->set_rules('attached_image_id[]', esc_html__('Attached images ID', 'W2MB'));
 				$validation->set_rules('attached_image_title[]', esc_html__('Attached images caption', 'W2MB'));
 				$validation->set_rules('attached_images_order', esc_html__('Attached images order', 'W2MB'));
@@ -244,8 +250,9 @@ class w2mb_media_manager {
 				$validation->set_rules('attached_video_id[]', esc_html__('Attached video ID', 'W2MB'));
 			}
 	
-			if (!$validation->run())
+			if (!$validation->run()) {
 				$errors[] = $validation->error_array();
+			}
 			
 			return $validation->result_array();
 		}

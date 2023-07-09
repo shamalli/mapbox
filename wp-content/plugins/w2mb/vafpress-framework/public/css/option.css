@@ -401,8 +401,6 @@
 }
 /* CHECKBUTTON & RADIOBUTTON */
 .vp-wrap .vp-checkbox .field label,.vp-wrap .vp-radiobutton .field label {
-	*display: inline;
-	*zoom: 1;
 	display: inline-block;
 	margin-right: 30px;
 	line-height: 30px;
@@ -438,8 +436,6 @@
 }
 /* CHECKIMAGE & RADIOIMAGE */
 .vp-wrap .vp-checkimage .field label,.vp-wrap .vp-radioimage .field label {
-	*display: inline;
-	*zoom: 1;
 	display: inline-block;
 	margin: 5px;
 	vertical-align: top;
@@ -459,8 +455,6 @@
 }
 /* TOGGLE */
 .vp-wrap .vp-toggle .field label {
-	*display: inline;
-	*zoom: 1;
 	display: inline-block;
 }
 .vp-wrap .vp-toggle .field span {

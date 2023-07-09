@@ -16,7 +16,7 @@
 					<input
 						name="max_length"
 						type="text"
-						size="2"
+						size="8"
 						value="<?php echo esc_attr($content_field->max_length); ?>" />
 				</td>
 			</tr>

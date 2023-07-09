@@ -138,6 +138,12 @@ class w2mb_content_field_select extends w2mb_content_field {
 			}
 		}
 	}
+	
+	public function exportCSV() {
+		if ($this->value && isset($this->selection_items[$this->value])) {
+			return $this->selection_items[$this->value];
+		}
+	}
 }
 
 add_filter('w2mb_selection_items_update_args', 'w2mb_filter_selection_items', 10, 3);

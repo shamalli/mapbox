@@ -49,7 +49,7 @@
 			</tr>
 			<tr>
 				<th scope="row">
-					<label><?php esc_html_e('Use default link text when empty', 'W2MB'); ?></label>
+					<label><?php esc_html_e('Use placeholder link text when empty', 'W2MB'); ?></label>
 				</th>
 				<td>
 					<input
@@ -63,7 +63,7 @@
 			</tr>
 			<tr>
 				<th scope="row">
-					<label><?php esc_html_e('Default link text', 'W2MB'); ?></label>
+					<label><?php esc_html_e('Placeholder link text', 'W2MB'); ?></label>
 				</th>
 				<td>
 					<input

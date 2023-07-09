@@ -76,31 +76,33 @@ class w2mb_search_fields {
 		}
 	}
 	
-	public function render_content_fields($search_form_id, $columns = 2, $search_form) {
+	public function render_content_fields($search_form_id, $columns = 2, $search_form = false) {
 		echo "<script>";
 		echo "var w2mb_fields_in_categories_" . $search_form_id . " = new Array();";
 		
-		foreach ($search_form->search_fields_array_all AS $search_field) {
-			if (!$search_field->content_field->isCategories() || $search_field->content_field->categories === array()) {
-				echo "w2mb_fields_in_categories_" . $search_form_id . "[" . $search_field->content_field->id . "] = [];";
-			} else {
-				echo "w2mb_fields_in_categories_" . $search_form_id . "[" . $search_field->content_field->id . "] = [" . implode(',', $search_field->content_field->categories) . "];";
+		if ($search_form) {
+			foreach ($search_form->search_fields_array_all AS $search_field) {
+				if (!$search_field->content_field->isCategories() || $search_field->content_field->categories === array()) {
+					echo "w2mb_fields_in_categories_" . $search_form_id . "[" . $search_field->content_field->id . "] = [];";
+				} else {
+					echo "w2mb_fields_in_categories_" . $search_form_id . "[" . $search_field->content_field->id . "] = [" . implode(',', $search_field->content_field->categories) . "];";
+				}
 			}
+			echo "</script>";
+			
+			w2mb_renderTemplate('search_fields/fields_search_form.tpl.php',
+				array(
+					'search_fields' => $search_form->search_fields_array,
+					'search_fields_advanced' => $search_form->search_fields_array_advanced,
+					'search_fields_all' => $search_form->search_fields_array_all,
+					'columns' => $columns,
+					'is_advanced_search_panel' => $search_form->is_advanced_search_panel,
+					'advanced_open' => $search_form->advanced_open,
+					'search_form_id' => $search_form_id,
+					'defaults' => $search_form->args
+				)
+			);
 		}
-		echo "</script>";
-		
-		w2mb_renderTemplate('search_fields/fields_search_form.tpl.php',
-			array(
-				'search_fields' => $search_form->search_fields_array,
-				'search_fields_advanced' => $search_form->search_fields_array_advanced,
-				'search_fields_all' => $search_form->search_fields_array_all,
-				'columns' => $columns,
-				'is_advanced_search_panel' => $search_form->is_advanced_search_panel,
-				'advanced_open' => $search_form->advanced_open,
-				'search_form_id' => $search_form_id,
-				'defaults' => $search_form->args
-			)
-		);
 	}
 	
 	public function retrieve_search_args($args, $defaults = array(), $include_GET_params = true, $shortcode_hash = null) {

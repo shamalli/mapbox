@@ -27,12 +27,37 @@ function enqueue_scripts_styles() {
 }
 
 function remove_envato_top_bar() {
+
 	echo "<script>
+
 if (document.referrer.indexOf('preview.codecanyon.net') != -1) top.location.replace(self.location.href);
+
 </script>";
+
 }
-// it syddenly does not work (september 2020)
-//add_action('wp_head', 'remove_envato_top_bar', 1);
+// it suddenly does not work (september 2020) (in chrome)
+add_action('wp_head', 'remove_envato_top_bar', 1);
+
+function add_target_top_to_links() {
+
+	echo "<script>
+
+(function($) {
+	'use strict';
+	
+	$(function() {
+
+		if (document.referrer.indexOf('preview.codecanyon.net') != -1) {
+			$('a').attr('target', '_top');
+		}
+
+	});
+})(jQuery);
+
+</script>";
+
+}
+add_action('wp_footer', 'add_target_top_to_links', 1);
 
 function add_google_analytics() {
 	if (strpos($_SERVER['SERVER_NAME'], 'salephpscripts.com') !== false) {
@@ -67,7 +92,7 @@ function buy_plugin_link() {
 	echo "<img src='" . get_stylesheet_directory_uri() . '/buy_plugin.jpg' . "' />";
 	echo "</a>";
 	echo "</div>"; */
-	echo "<a class='button w2mb-codecanyon-button' href='https://1.envato.market/km9P0'><span class='w2mb-purchase-icon fa fa-shopping-cart '></span> Purchase Plugin</a>";
+	echo "<a class='button w2mb-codecanyon-button' href='https://store.payproglobal.com/checkout?products[1][id]=76010' target='_blank'><span class='w2mb-purchase-icon fa fa-shopping-cart '></span> Purchase Plugin</a>";
 }
 add_action('wdt_before_navigation', 'buy_plugin_link');
 

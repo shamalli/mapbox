@@ -83,13 +83,13 @@ class w2mb_settings_manager {
 									'type' => 'section',
 									'title' => esc_html__('Slugs and anchors', 'W2MB'),
 									'fields' => array(
-										array(
+										/* array(
 											'type' => 'textbox',
 											'name' => 'w2mb_marker_anchor',
 											'label' => esc_html__('Map marker slug*', 'W2MB'),
 											'description' => esc_html__('This value appears in URL when map marker selected.', 'W2MB'),
 											'default' => get_option('w2mb_marker_anchor'),
-										),
+										), */
 										array(
 											'type' => 'textbox',
 											'name' => 'w2mb_listing_anchor',
@@ -644,6 +644,22 @@ class w2mb_settings_manager {
 											'default' => get_option('w2mb_enable_manual_coords'),
 										),
 										array(
+											'type' => 'radiobutton',
+											'name' => 'w2mb_zip_or_postal_text',
+											'label' => __('Use Zip or Postal code label', 'W2MB'),
+											'items' => array(
+												array(
+													'value' => 'zip',
+													'label' =>__('Zip code', 'W2MB'),
+												),
+												array(
+													'value' => 'postal',
+													'label' =>__('Postal code', 'W2MB'),
+												),
+											),
+											'default' => get_option('w2mb_zip_or_postal_text'),
+										),
+										array(
 											'type' => 'slider',
 											'name' => 'w2mb_default_map_zoom',
 											'label' => esc_html__('Default map zoom level (for submission page)', 'W2MB'),
@@ -778,14 +794,6 @@ class w2mb_settings_manager {
 									 		'min' => 100,
 									 		'max' => 600,
 									 		'step' => 10,
-										),
-										array(
-											'type' => 'slider',
-											'name' => 'w2mb_map_infowindow_offset',
-											'label' => esc_html__('Map InfoWindow vertical position above marker (in pixels)', 'W2MB'),
-											'default' => get_option('w2mb_map_infowindow_offset'),
-									 		'min' => 30,
-									 		'max' => 120,
 										),
 										array(
 											'type' => 'slider',
@@ -1109,7 +1117,7 @@ class w2mb_settings_manager {
 											'type' => 'radioimage',
 											'name' => 'w2mb_jquery_ui_schemas',
 											'label' => esc_html__('jQuery UI Style', 'W2MB'),
-											'description' =>  esc_html__('Controls the color of calendar, dialogs and slider UI widgets', 'W2MB') . (get_option('w2mb_notinclude_jqueryui_css') ? ' <strong>' . esc_html__('Warning: You have enabled not to include jQuery UI CSS on Advanced settings tab. Selected style will not be applied.', 'W2MB') . '</strong>' : ''),
+											'description' =>  esc_html__('Controls the color of calendar, dialogs, search dropdowns and slider UI widgets', 'W2MB') . (get_option('w2mb_notinclude_jqueryui_css') ? ' <strong>' . esc_html__('Warning: You have enabled not to include jQuery UI CSS on Advanced settings tab. Selected style will not be applied.', 'W2MB') . '</strong>' : ''),
 									 		'items' => array(
 									 			array(
 									 				'value' => 'blitzer',

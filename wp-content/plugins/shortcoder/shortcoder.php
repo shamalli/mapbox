@@ -4,13 +4,13 @@ Plugin Name: Shortcoder
 Plugin URI: https://www.aakashweb.com/wordpress-plugins/shortcoder/
 Description: Shortcoder plugin allows to create a custom shortcodes for HTML, JavaScript and other snippets. Now the shortcodes can be used in posts/pages and the snippet will be replaced in place.
 Author: Aakash Chakravarthy
-Version: 5.3.1
+Version: 6.1
 Author URI: https://www.aakashweb.com/
 Text Domain: shortcoder
 Domain Path: /languages
 */
 
-define( 'SC_VERSION', '5.3.1' );
+define( 'SC_VERSION', '6.1' );
 define( 'SC_PATH', plugin_dir_path( __FILE__ ) ); // All have trailing slash
 define( 'SC_URL', plugin_dir_url( __FILE__ ) );
 define( 'SC_ADMIN_URL', trailingslashit( plugin_dir_url( __FILE__ ) . 'admin' ) );
@@ -23,14 +23,14 @@ final class Shortcoder{
 
     static public $shortcodes = array();
 
+    static public $current_shortcode = false;
+
     public static function init(){
         
         // Include the required
         self::includes();
 
-        add_action( 'plugins_loaded', array( __class__, 'load_text_domain' ) );
-        
-        add_shortcode( 'sc', array( __class__, 'execute_shortcode' ) );
+        add_shortcode( 'sc', array( __CLASS__, 'execute_shortcode' ) );
         
     }
 
@@ -41,6 +41,7 @@ final class Shortcoder{
         include_once( SC_PATH . 'admin/admin.php' );
         include_once( SC_PATH . 'admin/form.php' );
         include_once( SC_PATH . 'admin/edit.php' );
+        include_once( SC_PATH . 'admin/settings.php' );
         include_once( SC_PATH . 'admin/manage.php' );
         include_once( SC_PATH . 'admin/tools.php' );
 
@@ -48,6 +49,7 @@ final class Shortcoder{
 
     public static function execute_shortcode( $atts, $enclosed_content = null ){
 
+        $atts = (array) $atts;
         $shortcodes = self::get_shortcodes();
 
         if( empty( $shortcodes ) ){
@@ -56,21 +58,35 @@ final class Shortcoder{
 
         $shortcode = self::find_shortcode( $atts, $shortcodes );
 
+        $shortcode = apply_filters( 'sc_mod_shortcode', $shortcode, $atts, $enclosed_content );
+        do_action( 'sc_do_before', $shortcode, $atts );
+
         if( !is_array( $shortcode ) ){
             return $shortcode;
         }
+
+        // Prevent same shortcode nested loop
+        if( self::$current_shortcode == $shortcode[ 'name' ] ){
+            return '';
+        }
+        self::$current_shortcode = $shortcode[ 'name' ];
 
         $sc_content = $shortcode[ 'content' ];
         $sc_settings = $shortcode[ 'settings' ];
 
         if( !self::can_display( $shortcode ) ){
-            return '<!-- Shortcode does not match the conditions -->';
+            $sc_content = '<!-- Shortcode does not match the conditions -->';
+        }else{
+            $sc_content = self::replace_sc_params( $sc_content, $atts );
+            $sc_content = self::replace_wp_params( $sc_content, $enclosed_content );
+            $sc_content = self::replace_custom_fields( $sc_content );
+            $sc_content = do_shortcode( $sc_content );
         }
 
-        $sc_content = self::replace_sc_params( $sc_content, $atts );
-        $sc_content = self::replace_wp_params( $sc_content, $enclosed_content );
-        $sc_content = self::replace_custom_fields( $sc_content );
-        $sc_content = do_shortcode( $sc_content );
+        $sc_content = apply_filters( 'sc_mod_output', $sc_content, $atts, $sc_settings, $enclosed_content );
+        do_action( 'sc_do_after', $shortcode, $atts );
+
+        self::$current_shortcode = false;
 
         return $sc_content;
 
@@ -92,6 +108,7 @@ final class Shortcoder{
         foreach( $shortcode_posts as $index => $post ){
             $shortcodes[ $post->post_name ] = array(
                 'id' => $post->ID,
+                'name' => $post->post_name,
                 'content' => $post->post_content,
                 'settings' => self::get_sc_settings( $post->ID )
             );
@@ -105,12 +122,31 @@ final class Shortcoder{
 
     public static function default_sc_settings(){
 
-        return array(
+        return apply_filters( 'sc_mod_sc_settings', array(
+            '_sc_description' => '',
             '_sc_disable_sc' => 'no',
             '_sc_disable_admin' => 'no',
-            '_sc_editor' => 'code',
+            '_sc_editor' => '',
             '_sc_allowed_devices' => 'all'
-        );
+        ));
+
+    }
+
+    public static function default_settings(){
+
+        return apply_filters( 'sc_mod_settings', array(
+            'default_editor' => 'code',
+            'default_content' => ''
+        ));
+
+    }
+
+    public static function get_settings(){
+
+        $settings = get_option( 'sc_settings', array() );
+        $default_settings = self::default_settings();
+
+        return self::set_defaults( $settings, $default_settings );
 
     }
 
@@ -136,7 +172,7 @@ final class Shortcoder{
 
     public static function get_sc_tag( $post_id ){
         $post = get_post( $post_id );
-        return '[sc name="' . $post->post_name . '"]';
+        return '[sc name="' . $post->post_name . '"][/sc]';
     }
 
     public static function find_shortcode( $atts, $shortcodes ){
@@ -204,7 +240,7 @@ final class Shortcoder{
 
         $params = array_change_key_case( $params, CASE_LOWER );
 
-        preg_match_all('/%%([a-zA-Z0-9_]+)\:?(.*?)%%/', $content, $matches);
+        preg_match_all('/%%([a-zA-Z0-9_\-]+)\:?(.*?)%%/', $content, $matches);
 
         $cp_tags = $matches[0];
         $cp_names = $matches[1];
@@ -219,9 +255,18 @@ final class Shortcoder{
 
             if( array_key_exists( $name, $params ) ){
                 $value = $params[ $name ];
+
+                // Handle scenario when the attributes are added with paragraph tags by autop
+                if( substr( $value, 0, 4 ) == '</p>' ){
+                    $value = substr( $value, 4 );
+                    if( substr( $value, -3 ) == '<p>' ){
+                        $value = substr( $value, 0, -3 );
+                    }
+                }
+
             }
 
-            if( empty( $value ) ){
+            if( $value == '' ){
                 array_push( $to_replace, $default );
             }else{
                 array_push( $to_replace, $value );
@@ -264,7 +309,7 @@ final class Shortcoder{
 
         global $post;
 
-        preg_match_all('/\$\$[^\s]+\$\$/', $content, $matches );
+        preg_match_all('/\$\$[^\s^$]+\$\$/', $content, $matches );
 
         $cf_tags = $matches[0];
 
@@ -285,7 +330,7 @@ final class Shortcoder{
             }
 
             $match = substr( $match[0], 1 );
-            $value = get_post_meta( $post->ID, $match, true );
+            $value = is_object( $post ) ? get_post_meta( $post->ID, $match, true ) : '';
             $content = str_replace( $tag, $value, $content );
 
         }
@@ -312,6 +357,7 @@ final class Shortcoder{
                     'post_date' => __( 'Post date', 'shortcoder' ),
                     'post_modified_date' => __( 'Post modified date', 'shortcoder' ),
                     'post_comments_count' => __( 'Post comments count', 'shortcoder' ),
+                    'post_slug' => __( 'Post slug', 'shortcoder' ),
                     
                     'site_name' => __( 'Site title', 'shortcoder' ),
                     'site_description' => __( 'Site description', 'shortcoder' ),
@@ -352,10 +398,20 @@ final class Shortcoder{
 
     }
 
-    public static function load_text_domain(){
-
-        load_plugin_textdomain( 'shortcoder', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
-
+    public static function set_defaults( $a, $b ){
+        
+        $a = (array) $a;
+        $b = (array) $b;
+        $result = $b;
+        
+        foreach ( $a as $k => &$v ) {
+            if ( is_array( $v ) && isset( $result[ $k ] ) ) {
+                $result[ $k ] = self::set_defaults( $v, $result[ $k ] );
+            } else {
+                $result[ $k ] = $v;
+            }
+        }
+        return $result;
     }
 
 }

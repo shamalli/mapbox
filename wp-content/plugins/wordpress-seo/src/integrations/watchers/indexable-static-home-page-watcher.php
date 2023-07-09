@@ -1,49 +1,49 @@
 <?php
-/**
- * Watcher that checks for changes in the page used as homepage.
- *
- * @package Yoast\YoastSEO\Watchers
- */
 
 namespace Yoast\WP\SEO\Integrations\Watchers;
 
 use Yoast\WP\SEO\Conditionals\Admin_Conditional;
-use Yoast\WP\SEO\Helpers\Url_Helper;
 use Yoast\WP\SEO\Integrations\Integration_Interface;
 use Yoast\WP\SEO\Repositories\Indexable_Repository;
 
 /**
+ * Watcher that checks for changes in the page used as homepage.
+ *
  * Watches the static homepage option and updates the permalinks accordingly.
  */
 class Indexable_Static_Home_Page_Watcher implements Integration_Interface {
 
 	/**
-	 * @inheritDoc
+	 * The indexable repository.
+	 *
+	 * @var Indexable_Repository
+	 */
+	protected $repository;
+
+	/**
+	 * Returns the conditionals based on which this loadable should be active.
+	 *
+	 * @return array
 	 */
 	public static function get_conditionals() {
 		return [ Admin_Conditional::class ];
 	}
 
 	/**
-	 * The indexable repository.
-	 *
-	 * @var \Yoast\WP\SEO\Repositories\Indexable_Repository
-	 */
-	protected $repository;
-
-	/**
 	 * Indexable_Static_Home_Page_Watcher constructor.
 	 *
-	 * @param \Yoast\WP\SEO\Repositories\Indexable_Repository $repository The repository to use.
-	 *
 	 * @codeCoverageIgnore
+	 *
+	 * @param Indexable_Repository $repository The repository to use.
 	 */
 	public function __construct( Indexable_Repository $repository ) {
 		$this->repository = $repository;
 	}
 
 	/**
-	 * @inheritDoc
+	 * Initializes the integration.
+	 *
+	 * This is the place to register hooks and filters.
 	 */
 	public function register_hooks() {
 		\add_action( 'update_option_page_on_front', [ $this, 'update_static_homepage_permalink' ], 10, 2 );

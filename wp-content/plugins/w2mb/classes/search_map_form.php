@@ -2,8 +2,9 @@
 
 class w2mb_search_map_form extends w2mb_search_form {
 	public $listings_content = '';
+	public $locations_array = array();
 
-	public function __construct($uid = null, $controller = 'maps_controller', $args, $listings_content = '', $locations_array = array()) {
+	public function __construct($uid = null, $controller = 'maps_controller', $args = array(), $listings_content = '', $locations_array = array()) {
 		global $w2mb_instance;
 		
 		$this->args = array_merge(array(

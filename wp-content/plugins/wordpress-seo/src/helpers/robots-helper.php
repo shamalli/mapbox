@@ -1,44 +1,78 @@
 <?php
-/**
- * A helper object for the robots meta tag.
- *
- * @package Yoast\WP\SEO\Helpers
- */
 
 namespace Yoast\WP\SEO\Helpers;
 
-use Yoast\WP\SEO\Presentations\Indexable_Presentation;
+use Yoast\WP\SEO\Models\Indexable;
 
 /**
- * Class Robots_Helper
+ * A helper object for the robots meta tag.
  */
 class Robots_Helper {
 
 	/**
-	 * Sets the robots index to no index.
+	 * Holds the Post_Type_Helper.
 	 *
-	 * @param string                 $robots       The current robots value.
-	 * @param Indexable_Presentation $presentation Presentation.
-	 *
-	 * @return string The altered robots string.
+	 * @var Post_Type_Helper
 	 */
-	public function set_robots_no_index( $robots, Indexable_Presentation $presentation ) {
-		// When robots is null just return the default but with noindex: `noindex, follow`.
-		if ( ! \is_string( $robots ) ) {
-			return 'noindex, follow';
+	protected $post_type_helper;
+
+	/**
+	 * Holds the Taxonomy_Helper.
+	 *
+	 * @var Taxonomy_Helper
+	 */
+	protected $taxonomy_helper;
+
+	/**
+	 * Constructs a Score_Helper.
+	 *
+	 * @param Post_Type_Helper $post_type_helper The Post_Type_Helper.
+	 * @param Taxonomy_Helper  $taxonomy_helper  The Taxonomy_Helper.
+	 */
+	public function __construct(
+		Post_Type_Helper $post_type_helper,
+		Taxonomy_Helper $taxonomy_helper
+	) {
+		$this->post_type_helper = $post_type_helper;
+		$this->taxonomy_helper  = $taxonomy_helper;
+	}
+
+	/**
+	 * Retrieves whether the Indexable is indexable.
+	 *
+	 * @param Indexable $indexable The Indexable.
+	 *
+	 * @return bool Whether the Indexable is indexable.
+	 */
+	public function is_indexable( Indexable $indexable ) {
+		if ( $indexable->is_robots_noindex === null ) {
+			// No individual value set, check the global setting.
+			switch ( $indexable->object_type ) {
+				case 'post':
+					return $this->post_type_helper->is_indexable( $indexable->object_sub_type );
+				case 'term':
+					return $this->taxonomy_helper->is_indexable( $indexable->object_sub_type );
+			}
 		}
 
-		// Already noindex.
-		if ( \strpos( $robots, 'noindex' ) !== false ) {
+		return $indexable->is_robots_noindex === false;
+	}
+
+	/**
+	 * Sets the robots index to noindex.
+	 *
+	 * @param array $robots The current robots value.
+	 *
+	 * @return array The altered robots string.
+	 */
+	public function set_robots_no_index( $robots ) {
+		if ( ! \is_array( $robots ) ) {
+			\_deprecated_argument( __METHOD__, '14.1', '$robots has to be a key-value paired array.' );
 			return $robots;
 		}
 
-		// Replace index with noindex.
-		if ( \strpos( $robots, 'index' ) !== false ) {
-			return \str_replace( 'index', 'noindex', $robots );
-		}
+		$robots['index'] = 'noindex';
 
-		// Add noindex.
-		return 'noindex, ' . $robots;
+		return $robots;
 	}
 }

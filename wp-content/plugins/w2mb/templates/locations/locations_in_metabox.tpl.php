@@ -1,6 +1,8 @@
 		<div class="w2mb-location-in-metabox">
 			<?php $uID = rand(1, 10000); ?>
 			<input type="hidden" name="w2mb_location[<?php echo esc_attr($uID);?>]" value="1" />
+			
+			<p>ID #<?php echo $location->id; ?></p>
 
 			<?php
 			if (w2mb_is_anyone_in_taxonomy(W2MB_LOCATIONS_TAX)) {
@@ -59,7 +61,7 @@
 			<div class="w2mb-row w2mb-form-group w2mb-location-input w2mb-zip-or-postal-index-wrapper <?php if (!w2mb_get_dynamic_option('w2mb_enable_postal_index')): ?>w2mb-display-none<?php endif; ?>">
 				<div class="w2mb-col-md-2">
 					<label class="w2mb-control-label">
-						<?php esc_html_e('Zip code', 'W2MB'); ?>
+						<?php if (get_option("w2mb_zip_or_postal_text") == 'postal') esc_html_e('Postal code', 'W2MB'); else esc_html_e('Zip code', 'W2MB'); ?>
 					</label>
 				</div>
 				<div class="w2mb-col-md-10">

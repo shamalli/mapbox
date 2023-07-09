@@ -4,11 +4,9 @@ if (!defined('ABSPATH')) exit;
 
 function disable_gutenberg_admin_notice() {
 	
-	$screen = get_current_screen();
+	$screen_id = disable_gutenberg_get_current_screen_id();
 	
-	if (!property_exists($screen, 'id')) return;
-	
-	if ($screen->id === 'settings_page_disable-gutenberg') {
+	if ($screen_id === 'settings_page_disable-gutenberg') {
 		
 		if (isset($_GET['reset-options'])) {
 			

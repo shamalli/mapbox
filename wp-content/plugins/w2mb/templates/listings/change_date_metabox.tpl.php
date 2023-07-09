@@ -36,7 +36,8 @@
 <p><?php esc_html_e("Regular users can not change expiration date. This option is available only for admins.", 'W2MB'); ?></p>
 <?php endif; ?>
 
-<p><?php esc_html_e("Set new expiration date and time of the listing.<br />Be careful: If you'll set past date - listing will expire in some minutes.", 'W2MB'); ?></p>
+<p><?php esc_html_e("Set new expiration date and time of the listing.", 'W2MB'); ?></p>
+<p><?php esc_html_e("Be careful: If you'll set past date - listing will expire in some minutes.", 'W2MB'); ?></p>
 
 <div class="w2mb-content">
 	<div class="w2mb-field w2mb-form-group w2mb-form-horizontal">

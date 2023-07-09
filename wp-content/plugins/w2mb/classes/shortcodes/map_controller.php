@@ -87,6 +87,7 @@ class w2mb_map_controller extends w2mb_frontend_controller {
 				'zoom_map_onclick' => 0,
 				'categories' => '',
 				'locations' => '',
+				'tags' => '',
 				'ratings' => '',
 				'uid' => null,
 		), $args);

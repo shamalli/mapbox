@@ -9,9 +9,9 @@
 	Donate link: https://monzillamedia.com/donate.html
 	Contributors: specialk
 	Requires at least: 4.9
-	Tested up to: 5.4
-	Stable tag: 2.1
-	Version: 2.1
+	Tested up to: 6.2
+	Stable tag: 2.9
+	Version: 2.9
 	Requires PHP: 5.6.20
 	Text Domain: disable-gutenberg
 	Domain Path: /languages
@@ -32,7 +32,7 @@
 	You should have received a copy of the GNU General Public License
 	with this program. If not, visit: https://www.gnu.org/licenses/
 	
-	Copyright 2020 Monzilla Media. All rights reserved.
+	Copyright 2023 Monzilla Media. All rights reserved.
 */
 
 if (!defined('ABSPATH')) die();
@@ -47,9 +47,10 @@ if (!class_exists('DisableGutenberg')) {
 			$this->includes();
 			
 			add_action('admin_init',          array($this, 'check_version'));
-			add_action('plugins_loaded',      array($this, 'load_i18n'));
+			add_action('init',                array($this, 'load_i18n'));
 			add_filter('plugin_action_links', array($this, 'action_links'), 10, 2);
 			add_filter('plugin_row_meta',     array($this, 'plugin_links'), 10, 2);
+			add_filter('admin_footer_text',   array($this, 'footer_text'), 10, 1);
 			
 			add_action('admin_enqueue_scripts', 'disable_gutenberg_admin_enqueue_scripts');
 			add_action('admin_print_scripts',   'disable_gutenberg_admin_print_scripts');
@@ -69,7 +70,7 @@ if (!class_exists('DisableGutenberg')) {
 		
 		function constants() {
 			
-			if (!defined('DISABLE_GUTENBERG_VERSION')) define('DISABLE_GUTENBERG_VERSION', '2.1');
+			if (!defined('DISABLE_GUTENBERG_VERSION')) define('DISABLE_GUTENBERG_VERSION', '2.9');
 			if (!defined('DISABLE_GUTENBERG_REQUIRE')) define('DISABLE_GUTENBERG_REQUIRE', '4.9');
 			if (!defined('DISABLE_GUTENBERG_AUTHOR'))  define('DISABLE_GUTENBERG_AUTHOR',  'Jeff Starr');
 			if (!defined('DISABLE_GUTENBERG_NAME'))    define('DISABLE_GUTENBERG_NAME',    __('Disable Gutenberg', 'disable-gutenberg'));
@@ -121,6 +122,7 @@ if (!class_exists('DisableGutenberg')) {
 				'whitelist-title' => '',
 				'whitelist'       => 0,
 				'styles-enable'   => 0,
+				'classic-widgets' => 1,
 				
 			);
 			
@@ -184,6 +186,26 @@ if (!class_exists('DisableGutenberg')) {
 			
 		}
 		
+		function footer_text($text) {
+			
+			$screen_id = disable_gutenberg_get_current_screen_id();
+			
+			$ids = array('settings_page_disable-gutenberg');
+			
+			if ($screen_id && apply_filters('disable_gutenberg_admin_footer_text', in_array($screen_id, $ids))) {
+				
+				$text = __('Like this plugin? Give it a', 'disable-gutenberg');
+				
+				$text .= ' <a target="_blank" rel="noopener noreferrer" href="https://wordpress.org/support/plugin/disable-gutenberg/reviews/?rate=5#new-post">';
+				
+				$text .= __('★★★★★ rating&nbsp;&raquo;', 'disable-gutenberg') .'</a>';
+				
+			}
+			
+			return $text;
+			
+		}
+		
 		function check_version() {
 			
 			$wp_version = get_bloginfo('version');
@@ -213,7 +235,7 @@ if (!class_exists('DisableGutenberg')) {
 		
 		function load_i18n() {
 			
-			load_plugin_textdomain('disable-gutenberg', false, DISABLE_GUTENBERG_DIR .'languages/');
+			load_plugin_textdomain('disable-gutenberg', false, dirname(plugin_basename(__FILE__)) .'/languages/');
 			
 		}
 		

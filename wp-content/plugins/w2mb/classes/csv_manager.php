@@ -503,7 +503,7 @@ class w2mb_csv_manager {
 								$listing_data['images'][] = $image_url;
 								$this_is_import_by_URL = true;
 							} else {
-								$error = sprintf(esc_html__('Error on line %d: ', 'W2MB') . esc_attr__(sprintf("Incorrect image URL %s", 'W2MB'), $image_url), $n);
+								$error = sprintf(esc_html__('Error on line %d: ', 'W2MB') . sprintf(esc_attr__("Incorrect image URL %s", 'W2MB'), $image_url), $n);
 								$error_on_line = $this->setErrorOnLine($error);
 							}
 						}
@@ -1131,6 +1131,9 @@ class w2mb_csv_manager {
 				'posts_per_page' => $number,
 				'offset' => $offset,
 		);
+		
+		$args = apply_filters("w2mb_csv_export_args", $args);
+		
 		$query = new WP_Query($args);
 		$count = 0;
 		while ($query->have_posts()) {
@@ -1214,7 +1217,7 @@ class w2mb_csv_manager {
 					implode(';', $tags),
 					implode(';', $images),
 					implode(';', $videos),
-					((!$listing->level->eternal_active_period) ?  date('d.m.Y H:i', $listing->expiration_date) : ''),
+					((!$listing->level->eternal_active_period && $listing->expiration_date) ?  date('d.m.Y H:i', $listing->expiration_date) : ''),
 					get_post_meta($listing_id, '_contact_email', true),
 					get_post_meta($listing_id, '_is_claimable', true),
 			);
@@ -1231,6 +1234,8 @@ class w2mb_csv_manager {
 
 			$csv_output[] = $row;
 		}
+		
+		$csv_output = apply_filters("w2mb_csv_export_output", $csv_output);
 		
 		$csv_file_name = 'w2mb-listings--' . date('Y-m-d_H_i_s') . '--' . $count . '.csv';
 
@@ -1276,6 +1281,8 @@ class w2mb_csv_manager {
 			}
 		}
 		$images = array_unique($images);
+		
+		$images = apply_filters("w2mb_csv_export_images", $images);
 
 		if ($images) {
 			$zip_file = trailingslashit(get_temp_dir()) . 'w2mb_images.zip';
@@ -1297,12 +1304,7 @@ class w2mb_csv_manager {
 			flush();
 			readfile($zip_file);
 
-			if (!isset($GLOBALS['wp_filesystem']) || !is_object($GLOBALS['wp_filesystem'])) {
-				WP_Filesystem();
-			}
-			
-			$wp_file = new WP_Filesystem_Direct();
-			$wp_file->delete($zip_file);
+			register_shutdown_function('unlink', $zip_file);
 		}
 
 		exit;

@@ -1,6 +1,6 @@
 <?php
 /**
-  * Gives the page details for the services
+  * Gives the page details for WordPress parameters
   * 
   */
 
@@ -29,6 +29,7 @@ class Shortcoder_Metadata{
             'post_author' => '',
             'post_date' => '',
             'post_modified_date' => '',
+            'post_slug' => '',
             
             'site_name' => get_bloginfo( 'name' ),
             'site_description' => get_bloginfo( 'description' ),
@@ -150,7 +151,12 @@ class Shortcoder_Metadata{
         }
         
         $meta = wp_parse_args( $d, $defaults );
-        $meta = array_map( 'trim', $meta );
+        foreach( $meta as $key => $val ){
+            if( is_string( $val ) ){
+                $val = trim( $val );
+            }
+            $meta[ $key ] = $val;
+        }
         $meta = apply_filters( 'sc_mod_metadata', $meta );
         
         return $meta;
@@ -168,12 +174,13 @@ class Shortcoder_Metadata{
                 'short_url' => wp_get_shortlink( $id ),
                 
                 'post_id' => $id,
-                'post_excerpt' => self::excerpt( 100 ),
+                'post_excerpt' => self::excerpt(),
                 'post_comments_count' => get_comments_number( $id ),
                 'post_image' => self::post_image( $id ),
                 'post_author' => get_the_author(),
                 'post_date' => get_the_date(),
-                'post_modified_date' => get_the_modified_date()
+                'post_modified_date' => get_the_modified_date(),
+                'post_slug' => self::post_slug()
             );
 
             if( $d[ 'short_url' ] == '' ){
@@ -186,7 +193,7 @@ class Shortcoder_Metadata{
         
     }
     
-    public static function excerpt( $length = 250 ){
+    public static function excerpt(){
         
         global $post;
         
@@ -194,10 +201,7 @@ class Shortcoder_Metadata{
             return '';
         }
         
-        $excerpt = $post->post_excerpt; // using $post->post_excerpt instead of get_the_excerpt as the_content filter loses shortcode formatting
-        
-        $excerpt_text = ( empty( $excerpt ) ) ? strip_tags( strip_shortcodes( $post->post_content ) ) : $excerpt;
-        return substr( $excerpt_text, 0, $length );
+        return $post->post_excerpt;
         
     }
     
@@ -213,6 +217,18 @@ class Shortcoder_Metadata{
         
     }
     
+    public static function post_slug(){
+
+        global $post;
+
+        if( !is_object( $post ) ){
+            return '';
+        }
+
+        return $post->post_name;
+
+    }
+
 }
 
 Shortcoder_Metadata::init();

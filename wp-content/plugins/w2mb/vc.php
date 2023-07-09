@@ -43,11 +43,11 @@ function w2mb_vc_init() {
 		vc_add_shortcode_param('categoriesfield', 'w2mb_categories_param');
 		function w2mb_categories_param($settings, $value) {
 			$out = "<script>
-				function updateTagChecked() { jQuery('#" . $settings['param_name'] . "').val(jQuery('#" . $settings['param_name'] . "_select').val()); }
+				function updateTagChecked_categories() { jQuery('#" . $settings['param_name'] . "').val(jQuery('#" . $settings['param_name'] . "_select').val()); }
 		
 				jQuery(function() {
-					jQuery(document).on('click', '#" . $settings['param_name'] . "_select option', updateTagChecked);
-					updateTagChecked();
+					jQuery(document).on('click', '#" . $settings['param_name'] . "_select option', updateTagChecked_categories);
+					updateTagChecked_categories();
 				});
 			</script>";
 		
@@ -81,11 +81,11 @@ function w2mb_vc_init() {
 		vc_add_shortcode_param('locationsfield', 'w2mb_locations_param');
 		function w2mb_locations_param($settings, $value) {
 			$out = "<script>
-				function updateTagChecked() { jQuery('#" . $settings['param_name'] . "').val(jQuery('#" . $settings['param_name'] . "_select').val()); }
+				function updateTagChecked_locations() { jQuery('#" . $settings['param_name'] . "').val(jQuery('#" . $settings['param_name'] . "_select').val()); }
 		
 				jQuery(function() {
-					jQuery(document).on('click', '#" . $settings['param_name'] . "_select option', updateTagChecked);
-					updateTagChecked();
+					jQuery(document).on('click', '#" . $settings['param_name'] . "_select option', updateTagChecked_locations);
+					updateTagChecked_locations();
 				});
 			</script>";
 		
@@ -120,11 +120,11 @@ function w2mb_vc_init() {
 		function w2mb_content_fields_param($settings, $value) {
 			global $w2mb_instance;
 			$out = "<script>
-				function updateTagChecked() { jQuery('#" . $settings['param_name'] . "').val(jQuery('#" . $settings['param_name'] . "_select').val()); }
+				function updateTagChecked_content_fields() { jQuery('#" . $settings['param_name'] . "').val(jQuery('#" . $settings['param_name'] . "_select').val()); }
 		
 				jQuery(function() {
-					jQuery(document).on('click', '#" . $settings['param_name'] . "_select option', updateTagChecked);
-					updateTagChecked();
+					jQuery(document).on('click', '#" . $settings['param_name'] . "_select option', updateTagChecked_content_fields);
+					updateTagChecked_content_fields();
 				});
 			</script>";
 

@@ -2,12 +2,13 @@
 
 class w2mb_location {
 	public $id;
+	public $listing_id;
 	public $post_id;
 	public $selected_location = 0;
 	public $address_line_1;
 	public $address_line_2;
 	public $zip_or_postal_index;
-	public $additional_info;
+	public $additional_info = '';
 	public $manual_coords = false;
 	public $map_coords_1, $latitude;
 	public $map_coords_2, $longitude;
@@ -65,8 +66,18 @@ class w2mb_location {
 			}
 
 			// do not reverse as it was reversed before
-			if (!$reverse)
+			if (!$reverse) {
 				$result_chain = array_reverse($result_chain);
+			}
+			
+			$result_chain = apply_filters("w2mb_get_selected_location_array", $result_chain);
+			
+			// re-order example
+			/* $order = array_flip(array(1, 2, 0));
+			uksort($result_chain, function($key1, $key2) use ($order) {
+				return $order[$key1] > $order[$key2];
+			}); */
+			
 			return implode($glue, $result_chain);
 		}
 	}

@@ -1,14 +1,11 @@
 <?php
-/**
- * WPSEO plugin file.
- *
- * @package Yoast\WP\SEO\Generators\Schema
- */
 
 namespace Yoast\WP\SEO\Generators\Schema;
 
+use Yoast\WP\SEO\Config\Schema_IDs;
+
 /**
- * Returns schema FAQ data.
+ * Returns schema HowTo data.
  */
 class HowTo extends Abstract_Schema_Piece {
 
@@ -24,7 +21,7 @@ class HowTo extends Abstract_Schema_Piece {
 	/**
 	 * Renders a list of questions, referencing them by ID.
 	 *
-	 * @return array $data Our Schema graph.
+	 * @return array Our Schema graph.
 	 */
 	public function generate() {
 		$graph = [];
@@ -52,7 +49,7 @@ class HowTo extends Abstract_Schema_Piece {
 		$minutes = empty( $attributes['minutes'] ) ? 0 : $attributes['minutes'];
 
 		if ( ( $days + $hours + $minutes ) > 0 ) {
-			$data['totalTime'] = esc_attr( 'P' . $days . 'DT' . $hours . 'H' . $minutes . 'M' );
+			$data['totalTime'] = \esc_attr( 'P' . $days . 'DT' . $hours . 'H' . $minutes . 'M' );
 		}
 	}
 
@@ -64,7 +61,7 @@ class HowTo extends Abstract_Schema_Piece {
 	 */
 	private function add_steps( &$data, $steps ) {
 		foreach ( $steps as $step ) {
-			$schema_id   = $this->context->canonical . '#' . esc_attr( $step['id'] );
+			$schema_id   = $this->context->canonical . '#' . \esc_attr( $step['id'] );
 			$schema_step = [
 				'@type' => 'HowToStep',
 				'url'   => $schema_id,
@@ -133,9 +130,11 @@ class HowTo extends Abstract_Schema_Piece {
 	 * @param array $step        The step block data.
 	 */
 	private function add_step_image( &$schema_step, $step ) {
-		foreach ( $step['text'] as $line ) {
-			if ( \is_array( $line ) && isset( $line['type'] ) && $line['type'] === 'img' ) {
-				$schema_step['image'] = $this->get_image_schema( esc_url( $line['props']['src'] ) );
+		if ( isset( $step['text'] ) && is_array( $step['text'] ) ) {
+			foreach ( $step['text'] as $line ) {
+				if ( \is_array( $line ) && isset( $line['type'] ) && $line['type'] === 'img' ) {
+					$schema_step['image'] = $this->get_image_schema( \esc_url( $line['props']['src'] ) );
+				}
 			}
 		}
 	}
@@ -155,6 +154,10 @@ class HowTo extends Abstract_Schema_Piece {
 			'mainEntityOfPage' => [ '@id' => $this->context->main_schema_id ],
 			'description'      => '',
 		];
+
+		if ( $this->context->has_article ) {
+			$data['mainEntityOfPage'] = [ '@id' => $this->context->main_schema_id . Schema_IDs::ARTICLE_HASH ];
+		}
 
 		if ( isset( $block['attrs']['jsonDescription'] ) ) {
 			$data['description'] = $this->helpers->schema->html->sanitize( $block['attrs']['jsonDescription'] );

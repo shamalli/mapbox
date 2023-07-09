@@ -121,6 +121,10 @@ class w2mb_maps {
 		
 		$locations_options = json_encode($this->locations_option_array);
 		$map_args = json_encode($this->args, JSON_NUMERIC_CHECK);
+		
+		// since WP 6.1.0 it adds unescaped decoding="async" in img tags breaking maps output
+		add_filter("wp_img_tag_add_decoding_attr", "__return_false", 1000);
+		
 		w2mb_renderTemplate('maps/map.tpl.php',
 				array(
 						'locations_options' => $locations_options,

@@ -3,7 +3,7 @@
 	border: 0;
 	border-radius: 0;
 	padding: 0;
-	z-index: 100002;
+	z-index: 1000000000;
 	position: fixed;
 	top: 0 !important;
 }
@@ -24,15 +24,6 @@
 	float: right;
 	cursor: pointer;
 	margin-top: 10px;
-}
-.lightbox {
-	z-index: 100005 !important;
-}
-.lightboxOverlay {
-	z-index: 100004 !important;
-}
-.pac-container.pac-logo {
-	z-index: 100005 !important;
 }
 
 /************************ Single Listing ************************/

@@ -1,6 +1,11 @@
 <?php 
 
 class w2mb_dashboard_controller extends w2mb_frontend_controller {
+	
+	public $referer;
+	public $listings_count;
+	public $active_tab;
+	public $subtemplate;
 
 	public function init($args = array()) {
 		global $w2mb_instance, $w2mb_fsubmit_instance, $sitepress;
@@ -9,6 +14,7 @@ class w2mb_dashboard_controller extends w2mb_frontend_controller {
 		
 		$shortcode_atts = array_merge(array(
 				'listing_info' => 1,
+				'use_wrapper' => 1,
 		), $args);
 		
 		$this->args = $shortcode_atts;
@@ -500,7 +506,13 @@ class w2mb_dashboard_controller extends w2mb_frontend_controller {
 	}
 
 	public function display() {
-		$output =  w2mb_renderTemplate($this->template, $this->template_args, true);
+		if ($this->args['use_wrapper'] || !$this->subtemplate) {
+			$output =  w2mb_renderTemplate($this->template, $this->template_args, true);
+		} else {
+			$output = '<div class="w2mb-content w2mb-dashboard">';
+			$output .=  w2mb_renderTemplate($this->subtemplate, $this->template_args, true);
+			$output .= '</div>';
+		}
 		wp_reset_postdata();
 
 		return $output;

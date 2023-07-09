@@ -65,13 +65,7 @@ a.w2mb-hint-icon {
 	margin-bottom: 10px;
 }
 .w2mb-listing-single .w2mb-listing-frontpanel {
-	margin: 0;
-	float: right;
-}
-@media screen and (max-width: $mobile-screen-width) {
-	.w2mb-listing-single .w2mb-listing-frontpanel {
-		float: none;
-	}
+	text-align: end;
 }
 .w2mb-listing-frontpanel a.w2mb-btn {
 	margin: 10px 10px 10px 0;
@@ -206,4 +200,12 @@ div.w2mb-content .wpcf7-form .wpcf7-submit:focus {
 	float: right;
 	width: 50%;
 	text-align: right;
+}
+
+/************************ License support checker ************************/
+.w2mb-license-support-checker-active {
+	color: $status-active-color;
+}
+.w2mb-license-support-checker-expired {
+	color: $status-expired-color;
 }

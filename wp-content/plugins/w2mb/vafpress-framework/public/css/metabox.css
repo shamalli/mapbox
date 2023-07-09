@@ -30,8 +30,6 @@
 	background-position: 0px -240px;
 	margin-right: 5px;
 	margin-left: 5px;
-	*display: inline;
-	*zoom: 1;
 	display: inline-block;
 	height: 14px;
 	width: 14px;
@@ -196,8 +194,6 @@
 	margin-right: 3px;
 }
 .vp-metabox .vp-toggle .field .input label,.vp-metabox .vp-checkbox .field .input label,.vp-metabox .vp-radiobutton .field .input label {
-	*display: inline;
-	*zoom: 1;
 	display: inline-block;
 	margin-top: 6px;
 	line-height: 1.4em;
@@ -225,8 +221,6 @@
 }
 /* CHECKIMAGE & RADIOIMAGE */
 .vp-metabox .vp-checkimage .input label,.vp-metabox .vp-radioimage .input label {
-	*display: inline;
-	*zoom: 1;
 	display: inline-block;
 	margin: 5px;
 	vertical-align: top;

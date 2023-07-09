@@ -1,18 +1,14 @@
 <?php
-/**
- * Wrapper for WP_Query.
- *
- * @package Yoast\YoastSEO\Wrappers
- */
 
 namespace Yoast\WP\SEO\Wrappers;
 
 use WP_Query;
 
 /**
- * Class WP_Query_Wrapper
+ * Wrapper for WP_Query.
  */
 class WP_Query_Wrapper {
+
 	/**
 	 * Returns the global WP_Query object.
 	 *
@@ -37,6 +33,7 @@ class WP_Query_Wrapper {
 	 * @param WP_Query $wp_query The WP Query.
 	 */
 	public function set_query( WP_Query $wp_query ) {
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride -- This is a deliberate action.
 		$GLOBALS['wp_query'] = $wp_query;
 	}
 

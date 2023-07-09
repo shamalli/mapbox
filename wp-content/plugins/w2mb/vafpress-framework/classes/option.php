@@ -30,6 +30,10 @@ class VP_W2MB_Option
 	private $_options = NULL;
 
 	private $_hook_suffix;
+	
+	private $_dev_mode;
+	
+	private $_minimum_role;
 
 	public static $pool;
 

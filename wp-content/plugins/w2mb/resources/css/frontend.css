@@ -769,7 +769,7 @@ body > .w2mb-dropdowns-menu {
   border: 0;
   border-radius: 0;
   padding: 0;
-  z-index: 100002;
+  z-index: 1000000000;
   position: fixed;
   top: 0 !important;
 }
@@ -794,18 +794,6 @@ body > .w2mb-dropdowns-menu {
   float: right;
   cursor: pointer;
   margin-top: 10px;
-}
-
-.lightbox {
-  z-index: 100005 !important;
-}
-
-.lightboxOverlay {
-  z-index: 100004 !important;
-}
-
-.pac-container.pac-logo {
-  z-index: 100005 !important;
 }
 
 /************************ Single Listing ************************/
@@ -933,7 +921,7 @@ figure.w2mb-listing-logo .w2mb-listing-logo-img img {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000000;
+  z-index: 10000000000;
 }
 
 .w2mb-ajax-target-loading {
@@ -1068,6 +1056,10 @@ figure.w2mb-listing-logo .w2mb-listing-logo-img img {
   transition: all 0.5s ease;
 }
 
+.w2mb-maps-canvas .mapboxgl-popup-close-button {
+  display: none;
+}
+
 .w2mb-maps-canvas-wrapper {
   position: relative;
   overflow: hidden;
@@ -1160,6 +1152,7 @@ figure.w2mb-listing-logo .w2mb-listing-logo-img img {
 .w2mb-map-info-window-buttons,
 .w2mb-map-info-window-buttons-single {
   padding: 5px;
+  clear: both;
 }
 
 .w2mb-map-listings-panel .w2mb-map-info-window-buttons,
@@ -1577,6 +1570,24 @@ div.w2mb-map-locations-counter-bar {
   .w2mb-sidebar-open .w2mb-map-sidebar-toggle-container-mobile .w2mb-map-sidebar-toggle {
     transform: rotate(90deg);
   }
+
+  /* Categories search field still visible on full screen */
+  .w2mb-map-full-screen .w2mb-map-search-form {
+    display: block;
+  }
+
+  .w2mb-map-full-screen .w2mb-map-search-panel-wrapper,
+  .w2mb-map-full-screen .w2mb-map-listings-panel {
+    display: none;
+  }
+
+  .w2mb-map-full-screen .w2mb-map-search-input-container {
+    width: 75%;
+  }
+
+  .w2mb-map-full-screen .w2mb-map-search-wrapper {
+    position: fixed;
+  }
 }
 /* It works with devices width more than 768 pixels. */
 @media screen and (min-width: 769px) {
@@ -1878,15 +1889,9 @@ a.w2mb-hint-icon {
 }
 
 .w2mb-listing-single .w2mb-listing-frontpanel {
-  margin: 0;
-  float: right;
+  text-align: end;
 }
 
-@media screen and (max-width: 768px) {
-  .w2mb-listing-single .w2mb-listing-frontpanel {
-    float: none;
-  }
-}
 .w2mb-listing-frontpanel a.w2mb-btn {
   margin: 10px 10px 10px 0;
 }
@@ -2028,6 +2033,15 @@ div.w2mb-content .wpcf7-form .wpcf7-submit:focus {
   float: right;
   width: 50%;
   text-align: right;
+}
+
+/************************ License support checker ************************/
+.w2mb-license-support-checker-active {
+  color: #5BB75B;
+}
+
+.w2mb-license-support-checker-expired {
+  color: #DA4F49;
 }
 
 .w2mb-rating {
@@ -3072,7 +3086,6 @@ div.Tokenize ul.TokensContainer li.TokenSearch input {
 div.Tokenize {
   position: relative;
   display: inline-block;
-  zoom: 1;
   width: 100%;
 }
 

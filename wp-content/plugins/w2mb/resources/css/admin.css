@@ -713,7 +713,7 @@ span.w2mb-field-icon {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000000;
+  z-index: 10000000000;
 }
 
 .w2mb-ajax-target-loading {
@@ -952,15 +952,9 @@ a.w2mb-hint-icon {
 }
 
 .w2mb-listing-single .w2mb-listing-frontpanel {
-  margin: 0;
-  float: right;
+  text-align: end;
 }
 
-@media screen and (max-width: 768px) {
-  .w2mb-listing-single .w2mb-listing-frontpanel {
-    float: none;
-  }
-}
 .w2mb-listing-frontpanel a.w2mb-btn {
   margin: 10px 10px 10px 0;
 }
@@ -1102,6 +1096,15 @@ div.w2mb-content .wpcf7-form .wpcf7-submit:focus {
   float: right;
   width: 50%;
   text-align: right;
+}
+
+/************************ License support checker ************************/
+.w2mb-license-support-checker-active {
+  color: #5BB75B;
+}
+
+.w2mb-license-support-checker-expired {
+  color: #DA4F49;
 }
 
 .w2mb-rating {

@@ -3,22 +3,13 @@ $(document).ready(function(){
 
     var init = function(){
 
-        if(window.SC_EDITOR == 'code'){
+        if(typeof window.SC_EDITOR !== 'undefined' && typeof window.SC_EDITOR.active !== 'undefined' && window.SC_EDITOR.active == 'code'){
 
-            load_cm_sc_mode();
+            var codemirror_loaded = load_codemirror();
 
-            window.sc_cm = CodeMirror.fromTextArea(document.getElementById('sc_content'), {
-                lineNumbers: true,
-                mode: 'sc_mode',
-                indentWithTabs: false,
-                lineWrapping: true,
-                styleActiveLine: true,
-                htmlMode: true
-            });
-            sc_cm.setSize( null, 500 );
-            sc_cm.on('change', function(){
-                sc_cm.save();
-            });
+            if(!codemirror_loaded){
+                $('.sc_editor_toolbar').append('<p>Unable to load code editor. Please check browser console (press Ctrl+Shift+J) for errors or try deactivating any code editor related plugin/themes.</p>');
+            }
 
             $('.sc_editor_toolbar').appendTo('.sc_cm_menu');
 
@@ -34,14 +25,7 @@ $(document).ready(function(){
                 add_top_import_export_btn();
             }
 
-            if(SC_VARS['screen']['base'] == 'post'){
-                var $cfe_button = $('.cfe_bottom');
-                if($cfe_button.length > 0){
-                    $cfe_button.appendTo('#normal-sortables');
-                }
-            }
-
-            add_top_coffee_btn();
+            add_top_pro_btn();
         }
 
         $('.sc_params_list').appendTo('body');
@@ -49,12 +33,11 @@ $(document).ready(function(){
     }
 
     var set_sc_preview_text = function(name){
-        $('.sc_preview_text').text('[sc name="' + name + '"]');
+        $('.sc_preview_text').text('[sc name="' + name + '"][/sc]');
     }
 
     var insert_in_editor = function(data){
-        console.log(data);
-        if(window.SC_EDITOR == 'code'){
+        if(window.SC_EDITOR.active == 'code'){
             var doc = window.sc_cm.getDoc();
             doc.replaceRange(data, doc.getCursor());
         }else{
@@ -74,35 +57,82 @@ $(document).ready(function(){
         document.body.removeChild(el);
     };
 
-    var load_cm_sc_mode = function(){
-        
-        if(typeof CodeMirror.overlayMode === 'undefined'){
+    var load_codemirror = function(){
+
+        if(typeof window.SC_CODEMIRROR === 'undefined'){
+            console.error('Shortcoder: Codemirror settings are not loaded');
             return false;
         }
 
-        CodeMirror.defineMode('sc_mode', function(config, parserConfig){
-            var mustacheOverlay = {
-                token: function(stream, state){
-                    if(stream.match(/\$\$[a-z0-9A-Z:_]+\$\$/)){
-                        return 'number sc_param';
-                    }
-                    if(stream.match(/%%.*?%%/)){
-                        return 'atom sc_param';
-                    }
-                    stream.next();
-                }
-            };
-            return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || 'htmlmixed'), mustacheOverlay);
+        if(typeof window.wp === 'undefined' || typeof window.wp.codeEditor === 'undefined'){
+            console.error('Shortcoder: codeEditor namespace is not available');
+            return false;
+        }
+
+        var sc_mode_loaded = load_cm_sc_mode();
+        var mode = sc_mode_loaded ? 'sc_mode' : 'htmlmixed';
+
+        wp.codeEditor.defaultSettings.codemirror['mode'] = mode;
+
+        var editor = wp.codeEditor.initialize(document.getElementById('sc_content'), window.SC_CODEMIRROR);
+
+        editor.codemirror.setSize( null, 500 );
+        editor.codemirror.on('change', function(){
+            editor.codemirror.save();
         });
+
+        window.sc_cm = editor.codemirror;
+
+        return true;
+
+    }
+
+    var load_cm_sc_mode = function(){
+
+        if(typeof wp.CodeMirror === 'undefined'){
+            console.error('Shortcoder: CodeMirror library is not loaded/available');
+            return false;
+        }
+
+        if(typeof wp.CodeMirror.overlayMode === 'undefined'){
+            console.error('Shortcoder: CodeMirror overlay method is not available');
+            return false;
+        }
+
+        try{
+            wp.CodeMirror.defineMode('sc_mode', function(config, parserConfig){
+                var sc_overlay = {
+                    token: function(stream, state){
+                        if(stream.match(/\$\$[a-z0-9A-Z:_\-]+\$\$/)){
+                            return 'number sc_param';
+                        }
+                        if(stream.match(/%%.*?%%/)){
+                            return 'atom sc_param';
+                        }
+                        if(stream.match(/\[(.+?)?\](?:(.+?)?\[\/\])?/)){
+                            return 'string sc_param';
+                        }
+                        stream.next();
+                    }
+                };
+                return wp.CodeMirror.overlayMode(wp.CodeMirror.getMode(config, parserConfig.backdrop || 'htmlmixed'), sc_overlay);
+            });
+        }catch(error){
+            console.error('Shortcoder: Unable to load shortcoder mode.', error);
+            return false;
+        }
+
+        return true;
+
     }
 
     var close_params_list = function(){
         $('.sc_params_list').hide();
     }
 
-    var add_top_coffee_btn = function(){
+    var add_top_pro_btn = function(){
 
-        $('#screen-meta-links').prepend('<div class="screen-meta-toggle cfe_top_link"><a class="show-settings button" href="https://www.paypal.me/vaakash/" target="_blank">Buy me a Coffee</a></div>');
+        $('#screen-meta-links').prepend('<div class="screen-meta-toggle pro_top_link"><a class="show-settings button" href="https://www.aakashweb.com/wordpress-plugins/shortcoder/?utm_source=admin&utm_medium=top&utm_campaign=sc-pro#pro" target="_blank">Upgrade to PRO <span class="dashicons dashicons-plus"></span></a></div>');
 
     }
 
@@ -207,6 +237,16 @@ $(document).ready(function(){
         }, 3000);
     })
 
+    $('.sc_copy_list').on('click', function(e){
+        e.preventDefault();
+        var $copy_field = $(this).siblings('.sc_copy_text');
+        copy_to_clipboard($copy_field.val());
+        $copy_field.addClass('copied');
+        setTimeout(function() {
+            $copy_field.removeClass('copied');
+        }, 3000);
+    });
+
     $('.sc_changelog .dismiss_btn').on('click', function(){
         var url = SC_VARS.ajax_url + '?action=sc_admin_ajax&do=close_changelog';
         $.get(url, function( data ){
@@ -215,6 +255,15 @@ $(document).ready(function(){
             }else{
                 $( '.sc_changelog' ).fadeOut();
             }
+        });
+    });
+
+    $('.sc_settings_link').on('click', function(e){
+        e.preventDefault();
+        $('html').animate({
+            scrollTop: $("#sc_mb_settings").offset().top
+        }, 1000, function(){
+            $('input[name="post_title"]').focus();
         });
     });
 

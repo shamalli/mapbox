@@ -18,7 +18,6 @@
 	position: relative;
 	margin: 0 auto 60px;
 	padding: 0;
-	*zoom: 1;
 }
 
 .w2mb-bx-wrapper img {
@@ -80,8 +79,6 @@
 .w2mb-bx-wrapper .bx-pager .bx-pager-item,
 .w2mb-bx-wrapper .bx-controls-auto .bx-controls-auto-item {
 	display: inline-block;
-	*zoom: 1;
-	*display: inline;
 }
 
 .w2mb-bx-wrapper .bx-pager.bx-default-pager a {

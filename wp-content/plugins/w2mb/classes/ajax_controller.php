@@ -670,7 +670,7 @@ function w2mb_handle_wpcf7() {
 						if ($attrs = shortcode_parse_atts($matches[3][$key]))
 						if (isset($attrs['id']) && $attrs['id'] == $_POST['_wpcf7']) {
 							if (($listing_owner = get_userdata($post->post_author)) && $listing_owner->user_email)
-								$WPCF7_components['recipient'] = $listing_owner->user_email;
+								$WPCF7_components['recipient'] .= ','.$listing_owner->user_email;
 						}
 					}
 				}

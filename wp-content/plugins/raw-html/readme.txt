@@ -2,8 +2,8 @@
 Contributors: whiteshadow
 Tags: posts, formatting, javascript, html, css, code, disable
 Requires at least: 2.8
-Tested up to: 4.9
-Stable tag: 1.5.1
+Tested up to: 6.1.1
+Stable tag: 1.6.4
 
 Lets you use raw HTML or any other code in your posts. You can also disable smart quotes and other automatic formatting on a per-post basis.
 
@@ -23,6 +23,10 @@ RawHTML will also add new checkboxes to the "Edit Post" screen that let you disa
 * Disable convert_chars (the function that converts ampersands to HTML entities and "fixes" some Unicode characters).
 
 The free version only supports editing posts in the Text tab (called "HTML" in older WordPress versions). [Get the Pro version](http://rawhtmlpro.com/?utm_source=wordpress.org&utm_medium=readme_link&utm_campaign=RawHTML%20free) if you want to be able to switch between Text and the Visual editor without WordPress messing up your content.
+
+**Compatibility**
+
+This plugin doesn't fully support the Gutenberg editor. As of WordPress 5.0, some Raw HTML features will only work if you use the [Classic Editor](https://wordpress.org/plugins/classic-editor/) plugin. 
 
 **Usage**
 
@@ -49,6 +53,14 @@ By default, shortcodes that are inside [raw] tags will not work. They will just 
 `[raw shortcodes=1]This [shortcode] will be run.[/raw]
 
 [raw]This [shortcode] won't work.[/raw]`
+
+**Preserving `[raw]` code in excerpts**
+
+By default, the plugin will automatically remove any code that's inside `[raw]...[/raw]` tags from post excerpts. You can prevent that by adding the following line to `wp-config.php`:
+
+`define('RAW_HTML_KEEP_RAW_IN_EXCERPTS', true);`
+
+This will ensure that the plugin doesn't strip `[raw]` blocks from automatically generated excerpts. 
 
 **Notes**
 
@@ -79,6 +91,26 @@ Open to the post editor and click the "Screen Options" button in the top-right p
 
 
 == Changelog ==
+
+= 1.6.4 =
+* Improved compatibility with plugins that change or hide the WordPress version number.
+* Tested up to WordPress 6.1.1 and 6.2-alpha.
+
+= 1.6.3 =
+* Fixed a potential PHP warning about an expression being passed by reference.
+* Tested up to WordPress 5.5-alpha.
+
+= 1.6.2 =
+* Fixed a conflict with Jetpack that could cause the plugin to trigger a fatal error during certain cron jobs.
+* Tested up to WordPress 5.3.
+
+= 1.6.1 =
+* Fixed a conflict with the "AMP Stories" plugin. This fix may also help with current or future conflicts with other plugins that remove the default post filters.
+
+= 1.6 =
+* Added a way to preserve `[raw]` blocks in post excerpts.
+* Enabled the "Raw HTML" metabox for custom post types.
+* Tested up to WP 5.2 (only with the Classic Editor).
 
 = 1.5.1 = 
 * Added limited support for the page builder included with GoodLayers themes (e.g. Mediso).

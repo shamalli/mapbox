@@ -124,7 +124,7 @@ class w2mb_categories_manager {
 		$new_columns = $original_columns;
 		array_splice($new_columns, 1);
 		$new_columns['w2mb_category_id'] = esc_html__('Category ID', 'W2MB');
-		$new_columns['w2mb_category_icon'] = esc_html__('Icon', 'W2MB');
+		$new_columns['w2mb_category_icon'] = esc_html__('Icon in Search', 'W2MB');
 		if (get_option('w2mb_map_markers_type') == 'icons') {
 			$new_columns['w2mb_marker_category_icon'] = esc_html__('Marker Icon', 'W2MB');
 			$new_columns['w2mb_marker_category_color'] = esc_html__('Marker Color', 'W2MB');

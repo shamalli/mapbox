@@ -1,22 +1,29 @@
 <?php
-/**
- * Presentation object for indexables.
- *
- * @package Yoast\YoastSEO\Presentations
- */
 
 namespace Yoast\WP\SEO\Presentations;
 
+use WP_Term;
+use Yoast\WP\SEO\Helpers\Pagination_Helper;
 use Yoast\WP\SEO\Helpers\Taxonomy_Helper;
 use Yoast\WP\SEO\Wrappers\WP_Query_Wrapper;
 
 /**
- * Class Indexable_Presentation
+ * Class Indexable_Term_Archive_Presentation.
  *
- * @property \WP_Term $source
+ * Presentation object for indexables.
+ *
+ * @property WP_Term $source
  */
 class Indexable_Term_Archive_Presentation extends Indexable_Presentation {
+
 	use Archive_Adjacent;
+
+	/**
+	 * Holds the Pagination_Helper instance.
+	 *
+	 * @var Pagination_Helper
+	 */
+	protected $pagination;
 
 	/**
 	 * Holds the WP query wrapper instance.
@@ -35,10 +42,10 @@ class Indexable_Term_Archive_Presentation extends Indexable_Presentation {
 	/**
 	 * Indexable_Post_Type_Presentation constructor.
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @param WP_Query_Wrapper $wp_query_wrapper The wp query wrapper.
 	 * @param Taxonomy_Helper  $taxonomy         The Taxonomy helper.
-	 *
-	 * @codeCoverageIgnore
 	 */
 	public function __construct(
 		WP_Query_Wrapper $wp_query_wrapper,
@@ -49,7 +56,9 @@ class Indexable_Term_Archive_Presentation extends Indexable_Presentation {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Generates the canonical.
+	 *
+	 * @return string The canonical.
 	 */
 	public function generate_canonical() {
 		if ( $this->is_multiple_terms_query() ) {
@@ -60,20 +69,22 @@ class Indexable_Term_Archive_Presentation extends Indexable_Presentation {
 			return $this->model->canonical;
 		}
 
-		if ( ! $this->model->permalink ) {
+		if ( ! $this->permalink ) {
 			return '';
 		}
 
 		$current_page = $this->pagination->get_current_archive_page_number();
 		if ( $current_page > 1 ) {
-			return $this->pagination->get_paginated_url( $this->model->permalink, $current_page );
+			return $this->pagination->get_paginated_url( $this->permalink, $current_page );
 		}
 
-		return $this->model->permalink;
+		return $this->permalink;
 	}
 
 	/**
-	 * @inheritDoc
+	 * Generates the meta description.
+	 *
+	 * @return string The meta description.
 	 */
 	public function generate_meta_description() {
 		if ( $this->model->description ) {
@@ -84,14 +95,22 @@ class Indexable_Term_Archive_Presentation extends Indexable_Presentation {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Generates the source.
+	 *
+	 * @return array The source.
 	 */
 	public function generate_source() {
-		return \get_term( $this->model->object_id, $this->model->object_sub_type );
+		if ( ! empty( $this->model->object_id ) ) {
+			return \get_term( $this->model->object_id, $this->model->object_sub_type );
+		}
+
+		return \get_term( \get_queried_object()->term_id, \get_queried_object()->taxonomy );
 	}
 
 	/**
-	 * @inheritDoc
+	 * Generates the Open Graph description.
+	 *
+	 * @return string The Open Graph description.
 	 */
 	public function generate_open_graph_description() {
 		$open_graph_description = parent::generate_open_graph_description();
@@ -103,7 +122,9 @@ class Indexable_Term_Archive_Presentation extends Indexable_Presentation {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Generates the Twitter description.
+	 *
+	 * @return string The Twitter description.
 	 */
 	public function generate_twitter_description() {
 		$twitter_description = parent::generate_twitter_description();
@@ -119,7 +140,9 @@ class Indexable_Term_Archive_Presentation extends Indexable_Presentation {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Generates the robots value.
+	 *
+	 * @return array The robots value.
 	 */
 	public function generate_robots() {
 		$robots = $this->get_base_robots();
@@ -152,7 +175,9 @@ class Indexable_Term_Archive_Presentation extends Indexable_Presentation {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Generates the title.
+	 *
+	 * @return string The title.
 	 */
 	public function generate_title() {
 		if ( $this->model->title ) {
@@ -172,7 +197,9 @@ class Indexable_Term_Archive_Presentation extends Indexable_Presentation {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Generates the Open Graph type.
+	 *
+	 * @return string The Open Graph type.
 	 */
 	public function generate_open_graph_type() {
 		return 'article';

@@ -37,7 +37,8 @@
 	})(jQuery);
 </script>
 
-<p><?php esc_html_e("Set new expiration date and time of the listing.<br />Be careful: If you'll set past date - listing will expire in some minutes.", 'W2MB'); ?></p>
+<p><?php esc_html_e("Set new expiration date and time of the listing.", 'W2MB'); ?></p>
+<p><?php esc_html_e("Be careful: If you'll set past date - listing will expire in some minutes.", 'W2MB'); ?></p>
 
 <form action="<?php echo admin_url('options.php?page=w2mb_changedate&listing_id=' . $listing->post->ID . '&changedate_action=changedate&referer=' . urlencode($referer)); ?>" method="POST">
 	<p>

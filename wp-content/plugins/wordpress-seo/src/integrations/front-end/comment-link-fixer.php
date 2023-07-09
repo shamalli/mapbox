@@ -1,9 +1,4 @@
 <?php
-/**
- * WPSEO plugin file.
- *
- * @package WPSEO\Frontend
- */
 
 namespace Yoast\WP\SEO\Integrations\Front_End;
 
@@ -32,7 +27,9 @@ class Comment_Link_Fixer implements Integration_Interface {
 	protected $robots;
 
 	/**
-	 * @inheritDoc
+	 * Returns the conditionals based in which this loadable should be active.
+	 *
+	 * @return array
 	 */
 	public static function get_conditionals() {
 		return [ Front_End_Conditional::class ];
@@ -44,7 +41,7 @@ class Comment_Link_Fixer implements Integration_Interface {
 	 * @codeCoverageIgnore It only sets depedencies.
 	 *
 	 * @param Redirect_Helper $redirect The redirect helper.
-	 * @param Robots_Helper   $robots The robots helper.
+	 * @param Robots_Helper   $robots   The robots helper.
 	 */
 	public function __construct(
 		Redirect_Helper $redirect, Robots_Helper $robots
@@ -54,7 +51,11 @@ class Comment_Link_Fixer implements Integration_Interface {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Initializes the integration.
+	 *
+	 * This is the place to register hooks and filters.
+	 *
+	 * @return void
 	 */
 	public function register_hooks() {
 		if ( $this->clean_reply_to_com() ) {
@@ -63,8 +64,8 @@ class Comment_Link_Fixer implements Integration_Interface {
 		}
 
 		// When users view a reply to a comment, this URL parameter is set. These should never be indexed separately.
-		if ( $this->has_replytocom_parameter() ) {
-			\add_filter( 'wpseo_robots', [ $this->robots, 'set_robots_no_index' ], 10, 2 );
+		if ( $this->get_replytocom_parameter() !== null ) {
+			\add_filter( 'wpseo_robots_array', [ $this->robots, 'set_robots_no_index' ] );
 		}
 	}
 
@@ -73,10 +74,15 @@ class Comment_Link_Fixer implements Integration_Interface {
 	 *
 	 * @codeCoverageIgnore Wraps the filter input.
 	 *
-	 * @return string The value of replytocom.
+	 * @return string|null The value of replytocom or null if it does not exist.
 	 */
-	protected function has_replytocom_parameter() {
-		return filter_input( INPUT_GET, 'replytocom' );
+	protected function get_replytocom_parameter() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Reason: We are not processing form information.
+		if ( isset( $_GET['replytocom'] ) && \is_string( $_GET['replytocom'] ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Reason: We are not processing form information.
+			return \sanitize_text_field( \wp_unslash( $_GET['replytocom'] ) );
+		}
+		return null;
 	}
 
 	/**
@@ -89,13 +95,13 @@ class Comment_Link_Fixer implements Integration_Interface {
 	 * @return string The modified link.
 	 */
 	public function remove_reply_to_com( $link ) {
-		return preg_replace( '`href=(["\'])(?:.*(?:\?|&|&#038;)replytocom=(\d+)#respond)`', 'href=$1#comment-$2', $link );
+		return \preg_replace( '`href=(["\'])(?:.*(?:\?|&|&#038;)replytocom=(\d+)#respond)`', 'href=$1#comment-$2', $link );
 	}
 
 	/**
 	 * Redirects out the ?replytocom variables.
 	 *
-	 * @return boolean True when redirect has been done.
+	 * @return bool True when redirect has been done.
 	 */
 	public function replytocom_redirect() {
 		if ( isset( $_GET['replytocom'] ) && \is_singular() ) {
@@ -131,6 +137,6 @@ class Comment_Link_Fixer implements Integration_Interface {
 		 *
 		 * @param bool $return True to remove, false not to remove.
 		 */
-		return (bool) apply_filters( 'wpseo_remove_reply_to_com', true );
+		return (bool) \apply_filters( 'wpseo_remove_reply_to_com', true );
 	}
 }

@@ -81,7 +81,7 @@ class w2mb_admin {
 			esc_html__('Maps Admin', 'W2MB'),
 			$capability,
 			'w2mb_settings',
-			null,
+			'',
 			W2MB_RESOURCES_URL . 'images/menuicon.png'
 		);
 		add_submenu_page(
@@ -89,12 +89,11 @@ class w2mb_admin {
 			esc_html__("Maps settings", "W2MB"),
 			esc_html__("Maps settings", "W2MB"),
 			$capability,
-			'w2mb_settings',
-			null
+			'w2mb_settings'
 		);
 
 		add_submenu_page(
-			null,
+			'',
 			esc_html__("Maps Debug", "W2MB"),
 			esc_html__("Maps Debug", "W2MB"),
 			$capability,
@@ -102,7 +101,7 @@ class w2mb_admin {
 			array($this, 'debug')
 		);
 		add_submenu_page(
-			null,
+			'',
 			esc_html__("Maps Reset", "W2MB"),
 			esc_html__("Maps Reset", "W2MB"),
 			'manage_options',
@@ -299,15 +298,15 @@ class w2mb_admin {
 			wp_register_script('w2mb_mapbox', W2MB_RESOURCES_URL . 'js/mapboxgl.js', array('jquery'), W2MB_VERSION, true);
 			wp_enqueue_script('w2mb_mapbox');
 	
-			wp_register_script('w2mb_mapbox_draw', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js');
+			/* wp_register_script('w2mb_mapbox_draw', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js');
 			wp_enqueue_script('w2mb_mapbox_draw');
 			wp_register_style('w2mb_mapbox_draw', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css');
 			wp_enqueue_style('w2mb_mapbox_draw');
 					
-			wp_register_script('w2mb_mapbox_directions', W2MB_RESOURCES_URL . 'js/mapbox-gl-directions-w-language.js', array('jquery'), W2MB_VERSION, true);
+			wp_register_script('w2mb_mapbox_directions', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js');
 			wp_enqueue_script('w2mb_mapbox_directions');
-			wp_register_style('w2mb_mapbox_directions', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.0/mapbox-gl-directions.css');
-			wp_enqueue_style('w2mb_mapbox_directions');
+			wp_register_style('w2mb_mapbox_directions', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css');
+			wp_enqueue_style('w2mb_mapbox_directions'); */
 					
 			wp_register_script('w2mb_mapbox_language', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js');
 			wp_enqueue_script('w2mb_mapbox_language');

@@ -149,8 +149,6 @@
 	margin-right: 3px;
 }
 .vp-sc-wrapper .vp-toggle .field .input label,.vp-sc-wrapper .vp-checkbox .field .input label,.vp-sc-wrapper .vp-radiobutton .field .input label {
-	*display: inline;
-	*zoom: 1;
 	display: inline-block;
 	margin-top: 6px;
 	line-height: 1.4em;
@@ -178,8 +176,6 @@
 }
 /* CHECKIMAGE & RADIOIMAGE */
 .vp-sc-wrapper .vp-checkimage .input label,.vp-sc-wrapper .vp-radioimage .input label {
-	*display: inline;
-	*zoom: 1;
 	display: inline-block;
 	margin: 5px;
 	vertical-align: top;

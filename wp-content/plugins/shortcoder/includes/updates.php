@@ -6,7 +6,7 @@ class Shortcoder_Updates{
 
     public static function init(){
 
-        add_action( 'admin_init', array( __class__, 'do_update' ) );
+        add_action( 'admin_init', array( __CLASS__, 'do_update' ) );
 
     }
 

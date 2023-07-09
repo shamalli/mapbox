@@ -4,7 +4,7 @@
     Plugin URI: https://wordpress.org/plugins/relative-url-shortcode/
     Description: Now its easy to change domains and keep links and images fine you just need to use this shortcode [base_url] as your base url for links and images.  
     Author: Muhammad Sufian
-    Version: 1.0.0
+    Version: 1.1.0
     Author URI: http://technologicx.com/
     */
 

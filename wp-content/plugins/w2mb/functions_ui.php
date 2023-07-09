@@ -428,11 +428,13 @@ function w2mb_recaptcha() {
 			<script>
 			(function($) {
 				"use strict";
-	
-				grecaptcha.ready(function() {
-					grecaptcha.execute('<?php echo get_option('w2mb_recaptcha_public_key'); ?>').then(function(token) {
-						$('#g-recaptcha-response').val(token);
-					})
+
+				$(function() {
+					grecaptcha.ready(function() {
+						grecaptcha.execute('<?php echo get_option('w2mb_recaptcha_public_key'); ?>').then(function(token) {
+							$('#g-recaptcha-response').val(token);
+						})
+					});
 				});
 			})(jQuery);
 			</script>

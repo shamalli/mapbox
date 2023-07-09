@@ -1,18 +1,18 @@
 <?php
-/**
- * Abstract presenter class for the robots output.
- *
- * @package Yoast\YoastSEO\Presenters
- */
 
 namespace Yoast\WP\SEO\Presenters;
 
-use Yoast\WP\SEO\Presentations\Indexable_Presentation;
-
 /**
- * Class Robots_Presenter
+ * Presenter class for the robots output.
  */
 class Robots_Presenter extends Abstract_Indexable_Presenter {
+
+	/**
+	 * The tag key name.
+	 *
+	 * @var string
+	 */
+	protected $key = 'robots';
 
 	/**
 	 * Returns the robots output.
@@ -37,5 +37,4 @@ class Robots_Presenter extends Abstract_Indexable_Presenter {
 	public function get() {
 		return $this->presentation->robots;
 	}
-
 }

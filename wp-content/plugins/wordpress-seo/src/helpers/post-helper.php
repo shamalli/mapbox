@@ -1,16 +1,12 @@
 <?php
-/**
- * A helper object for post related things.
- *
- * @package Yoast\YoastSEO\Helpers
- */
 
 namespace Yoast\WP\SEO\Helpers;
 
-use Yoast\WP\Lib\Model;
+use WP_Post;
+use Yoast\WP\SEO\Repositories\Indexable_Repository;
 
 /**
- * Class Redirect_Helper
+ * A helper object for post related things.
  */
 class Post_Helper {
 
@@ -22,22 +18,52 @@ class Post_Helper {
 	private $string;
 
 	/**
+	 * Holds the Post_Type_Helper instance.
+	 *
+	 * @var Post_Type_Helper
+	 */
+	private $post_type;
+
+	/**
+	 * Represents the indexables repository.
+	 *
+	 * @var Indexable_Repository
+	 */
+	private $repository;
+
+	/**
 	 * Post_Helper constructor.
 	 *
-	 * @param String_Helper $string The string helper.
-	 *
 	 * @codeCoverageIgnore It only sets dependencies.
+	 *
+	 * @param String_Helper    $string_helper    The string helper.
+	 * @param Post_Type_Helper $post_type_helper The string helper.
 	 */
-	public function __construct( String_Helper $string ) {
-		$this->string = $string;
+	public function __construct(
+		String_Helper $string_helper,
+		Post_Type_Helper $post_type_helper
+	) {
+		$this->string    = $string_helper;
+		$this->post_type = $post_type_helper;
+	}
+
+	/**
+	 * Sets the indexable repository. Done to avoid circular dependencies.
+	 *
+	 * @required
+	 *
+	 * @param Indexable_Repository $repository The indexable repository.
+	 */
+	public function set_indexable_repository( Indexable_Repository $repository ) {
+		$this->repository = $repository;
 	}
 
 	/**
 	 * Removes all shortcode tags from the given content.
 	 *
-	 * @param string $content Content to remove all the shortcode tags from.
-	 *
 	 * @codeCoverageIgnore It only wraps a WordPress function.
+	 *
+	 * @param string $content Content to remove all the shortcode tags from.
 	 *
 	 * @return string Content without shortcode tags.
 	 */
@@ -48,9 +74,9 @@ class Post_Helper {
 	/**
 	 * Retrieves the post excerpt (without tags).
 	 *
-	 * @param int $post_id Post ID.
-	 *
 	 * @codeCoverageIgnore It only wraps another helper method.
+	 *
+	 * @param int $post_id Post ID.
 	 *
 	 * @return string Post excerpt (without tags).
 	 */
@@ -61,9 +87,9 @@ class Post_Helper {
 	/**
 	 * Retrieves the post type of the current post.
 	 *
-	 * @param WP_Post $post The post.
-	 *
 	 * @codeCoverageIgnore It only wraps a WordPress function.
+	 *
+	 * @param WP_Post|null $post The post.
 	 *
 	 * @return string|false Post type on success, false on failure.
 	 */
@@ -84,17 +110,17 @@ class Post_Helper {
 			return $post_title;
 		}
 
-		return  __( 'No title', 'wordpress-seo' );
+		return \__( 'No title', 'wordpress-seo' );
 	}
 
 	/**
 	 * Retrieves post data given a post ID.
 	 *
-	 * @param int $post_id Post ID.
-	 *
 	 * @codeCoverageIgnore It wraps a WordPress function.
 	 *
-	 * @return \WP_Post|null The post.
+	 * @param int $post_id Post ID.
+	 *
+	 * @return WP_Post|null The post.
 	 */
 	public function get_post( $post_id ) {
 		return \get_post( $post_id );
@@ -107,25 +133,94 @@ class Post_Helper {
 	 * - The attachment has a post parent.
 	 * - The attachment inherits the post status.
 	 *
+	 * @codeCoverageIgnore It relies too much on dependencies.
+	 *
 	 * @param int $post_parent      Post ID.
 	 * @param int $has_public_posts Whether the parent is public.
-	 *
-	 * @codeCoverageIgnore It relies too much on dependencies.
 	 *
 	 * @return bool Whether the update was successful.
 	 */
 	public function update_has_public_posts_on_attachments( $post_parent, $has_public_posts ) {
-		$orm_wrapper = Model::of_type( 'Indexable' );
+		$query = $this->repository->query()
+			->select( 'id' )
+			->where( 'object_type', 'post' )
+			->where( 'object_sub_type', 'attachment' )
+			->where( 'post_status', 'inherit' )
+			->where( 'post_parent', $post_parent );
 
-		// Debatable way to get the table name in an update format.
-		$query = $orm_wrapper->set( 'has_public_posts', $has_public_posts )->get_update_sql();
-		$query = str_replace( 'WHERE `id` = %s', '', $query );
+		if ( $has_public_posts !== null ) {
+			$query->where_raw( '( has_public_posts IS NULL OR has_public_posts <> %s )', [ $has_public_posts ] );
+		}
+		else {
+			$query->where_not_null( 'has_public_posts' );
+		}
+		$results = $query->find_array();
 
-		// Execute a raw query here to be able to find & set in one, i.e. more performant.
-		return $orm_wrapper
-			->raw_execute(
-				$query . 'WHERE `object_type` = \'post\' AND `object_sub_type` = \'attachment\' AND `post_status` = \'inherit\' AND `post_parent` = %s',
-				[ $has_public_posts, $post_parent ]
-			);
+		if ( empty( $results ) ) {
+			return true;
+		}
+
+		$updated = $this->repository->query()
+			->set( 'has_public_posts', $has_public_posts )
+			->where_id_in( \wp_list_pluck( $results, 'id' ) )
+			->update_many();
+
+		return $updated !== false;
+	}
+
+	/**
+	 * Determines if the post can be indexed.
+	 *
+	 * @param int $post_id Post ID to check.
+	 *
+	 * @return bool True if the post can be indexed.
+	 */
+	public function is_post_indexable( $post_id ) {
+		// Don't index posts which are not public (i.e. viewable).
+		$post_type    = \get_post_type( $post_id );
+		$public_types = $this->post_type->get_indexable_post_types();
+		if ( ! \in_array( $post_type, $public_types, true ) ) {
+			return false;
+		}
+
+		// Don't index excluded post statuses.
+		if ( \in_array( \get_post_status( $post_id ), $this->get_excluded_post_statuses(), true ) ) {
+			return false;
+		}
+
+		// Don't index revisions of posts.
+		if ( \wp_is_post_revision( $post_id ) ) {
+			return false;
+		}
+
+		// Don't index autosaves that are not caught by the auto-draft check.
+		if ( \wp_is_post_autosave( $post_id ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Retrieves the list of excluded post statuses.
+	 *
+	 * @return array The excluded post statuses.
+	 */
+	public function get_excluded_post_statuses() {
+		return [ 'auto-draft' ];
+	}
+
+	/**
+	 * Retrieves the list of public posts statuses.
+	 *
+	 * @return array The public post statuses.
+	 */
+	public function get_public_post_statuses() {
+		/**
+		 * Filter: 'wpseo_public_post_statuses' - List of public post statuses.
+		 *
+		 * @api array $post_statuses Post status list, defaults to array( 'publish' ).
+		 */
+		return \apply_filters( 'wpseo_public_post_statuses', [ 'publish' ] );
 	}
 }

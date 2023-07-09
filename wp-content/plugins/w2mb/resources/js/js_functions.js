@@ -220,6 +220,7 @@ function w2mb_GDouglasPeucker(source, kink) {
 			}*/
 		}
 		
+		w2mb_check_support();
 		w2mb_add_body_classes();
 		w2mb_get_rid_of_select2_choosen();
 		w2mb_process_main_search_fields();
@@ -242,6 +243,30 @@ function w2mb_GDouglasPeucker(source, kink) {
 		
 		w2mb_add_term_links();
 	});
+	
+	window.w2mb_check_support = function() {
+		
+		$(".w2mb-license-support-checker").each(function() {
+			
+			var el 		= $(this);
+			var nonce	= el.data("nonce");
+			
+			$.ajax({
+				type: 'POST',
+				url: w2mb_js_objects.ajaxurl,
+				data: { 
+					'action': 'w2mb_license_support_checker',
+					'security': nonce
+				},
+				success: function(response) {
+					
+					if (response) {
+						el.html(response);
+					}
+				}
+			});
+		});
+	}
 	
 	window.w2mb_add_term_links = function() {
 		$(document).on("click", ".w2mb-add-term-link", function(e) {
@@ -1568,7 +1593,7 @@ function w2mb_GDouglasPeucker(source, kink) {
 		var email = $this.find('#'+type+'_email');
 		var message = $this.find('#'+type+'_message');
 		var button = $this.find('.w2mb-send-message-button');
-		var recaptcha = ($this.find('.g-recaptcha-response').length ? $this.find('.g-recaptcha-response').val() : '');
+		var recaptcha = ($this.find('#g-recaptcha-response').length ? $this.find('#g-recaptcha-response').val() : '');
 		
 		$this.css('opacity', '0.5');
 		warning.hide();

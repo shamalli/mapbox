@@ -107,9 +107,15 @@ if (!function_exists('w2mb_renderMessages')) {
 }
 
 function w2mb_calcExpirationDate($date, $level) {
-	$date = strtotime('+'.$level->active_period_days.' day', $date);
-	$date = strtotime('+'.$level->active_period_months.' month', $date);
-	$date = strtotime('+'.$level->active_period_years.' year', $date);
+	if ($level->active_period_days) {
+		$date = strtotime('+'.$level->active_period_days.' day', $date);
+	}
+	if ($level->active_period_months) {
+		$date = strtotime('+'.$level->active_period_months.' month', $date);
+	}
+	if ($level->active_period_years) {
+		$date = strtotime('+'.$level->active_period_years.' year', $date);
+	}
 	
 	return $date;
 }
@@ -1717,7 +1723,7 @@ function w2mb_utf8ize($mixed) {
 		foreach ($mixed as $key => $value) {
 			$mixed[$key] = w2mb_utf8ize($value);
 		}
-	} elseif (is_string($mixed)) {
+	} elseif (is_string($mixed) && function_exists("mb_convert_encoding")) {
 		return mb_convert_encoding($mixed, "UTF-8", "UTF-8");
 	}
 	return $mixed;
@@ -1771,16 +1777,14 @@ function w2mb_get_listing_anchor() {
 
 function w2mb_getMapBoxStyles() {
 	$styles = array(
-			'Streets' => 'mapbox://styles/mapbox/streets-v10',
-			'OutDoors' => 'mapbox://styles/mapbox/outdoors-v10',
-			'Light' => 'mapbox://styles/mapbox/light-v9',
-			'Dark' => 'mapbox://styles/mapbox/dark-v9',
+			'Streets' => 'mapbox://styles/mapbox/streets-v11',
+			'OutDoors' => 'mapbox://styles/mapbox/outdoors-v11',
+			'Light' => 'mapbox://styles/mapbox/light-v10',
+			'Dark' => 'mapbox://styles/mapbox/dark-v10',
 			'Satellite' => 'mapbox://styles/mapbox/satellite-v9',
-			'Satellite streets' => 'mapbox://styles/mapbox/satellite-streets-v10',
-			'Navigation preview day' => 'mapbox://styles/mapbox/navigation-preview-day-v2',
-			'Navigation preview night' => 'mapbox://styles/mapbox/navigation-preview-night-v2',
-			'Navigation guidance day' => 'mapbox://styles/mapbox/navigation-guidance-day-v2',
-			'Navigation guidance night' => 'mapbox://styles/mapbox/navigation-guidance-night-v2',
+			'Satellite streets' => 'mapbox://styles/mapbox/satellite-streets-v11',
+			'Navigation day' => 'mapbox://styles/mapbox/navigation-day-v1',
+			'Navigation night' => 'mapbox://styles/mapbox/navigation-night-v1',
 	);
 
 	$styles = apply_filters('w2mb_mapbox_maps_styles', $styles);

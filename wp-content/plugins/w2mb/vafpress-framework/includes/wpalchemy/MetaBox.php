@@ -1619,8 +1619,6 @@ class WPAlchemy_MetaBox
 
 		$meta = get_post_meta($post_id, $this->id, TRUE);
 
-		// var_dump($meta);
-
 		// WPALCHEMY_MODE_EXTRACT
 
 		$fields = get_post_meta($post_id, $this->id . '_fields', TRUE);

@@ -792,14 +792,6 @@ var w2mb_draw_features = [];
 					if (typeof w2mb_global_locations_array[map_id][i] == 'object') {
 						if (location_id == w2mb_global_locations_array[map_id][i].id) {
 							var location_obj = w2mb_global_locations_array[map_id][i];
-							/*var side_offset = 0;
-							if ($("#w2mb-maps-canvas-"+map_id).hasClass("w2mb-sidebar-open")) {
-								if (w2mb_js_objects.is_rtl) {
-									side_offset = 200;
-								} else {
-									side_offset = -200;
-								}
-							}*/
 							if (!location_obj.is_ajax_markers) {
 								w2mb_applyZoomOnClick(map_id);
 								w2mb_maps[map_id].panToWithOffset(location_obj.marker.getLngLat(), 0, -100);
@@ -807,26 +799,11 @@ var w2mb_draw_features = [];
 							} else {
 								var old_zoom = w2mb_maps[map_id].getZoom();
 								var new_zoom = w2mb_applyZoomOnClick(map_id);
-								if ((new_zoom && new_zoom != old_zoom) || w2mb_isCenterOnClick(map_id)) {
+								if (w2mb_isCenterOnClick(map_id)) {
 									w2mb_setMapCenter(map_id, location_obj.marker.position);
 								}
 								w2mb_showInfoWindowAJAXMarker(location_obj, location_obj.marker, map_id, true);
 							}
-						
-							/*var location_obj = w2mb_global_locations_array[map_id][i];
-							if (!location_obj.is_ajax_markers) {
-								w2mb_applyZoomOnClick(map_id);
-								w2mb_showInfoWindow(location_obj, location_obj.marker, map_id);
-								//w2mb_panByInfoWindow(map_id);
-								w2mb_setMapCenter(map_id, location_obj.marker.position);
-							} else {
-								var old_zoom = w2mb_maps[map_id].getZoom();
-								var new_zoom = w2mb_applyZoomOnClick(map_id);
-								if ((new_zoom && new_zoom != old_zoom) || w2mb_isCenterOnClick(map_id)) {
-									w2mb_setMapCenter(map_id, location_obj.marker.position);
-								}
-								w2mb_showInfoWindowAJAXMarker(location_obj, location_obj.marker, map_id, true);
-							}*/
 						}
 					}
 				}
@@ -1425,6 +1402,8 @@ var w2mb_draw_features = [];
 					});
 				}
 		    }
+		    
+		    w2mb_info_window_by_hash(map_id);
 
 		    w2mb_setMapZoomCenter(map_id, map_attrs, markers_array);
 		    
@@ -1931,7 +1910,7 @@ var w2mb_draw_features = [];
 			
 			var old_zoom = w2mb_maps[map_id].getZoom();
 			var new_zoom = w2mb_applyZoomOnClick(map_id);
-			if ((new_zoom && new_zoom != old_zoom) || w2mb_isCenterOnClick(map_id)) {
+			if (w2mb_isCenterOnClick(map_id)) {
 				w2mb_setMapCenter(map_id, location.marker.position);
 			}
 			
@@ -2120,6 +2099,11 @@ var w2mb_draw_features = [];
 	window.w2mb_applyZoomOnClick = function(map_id) {
 		var attrs_array = w2mb_get_map_markers_attrs_array(map_id);
 		if (attrs_array.zoom_map_onclick) {
+			var zoom_number = parseInt(attrs_array.zoom_map_onclick);
+			if (zoom_number > w2mb_maps[map_id].getZoom()) {
+				w2mb_maps[map_id].setZoom(zoom_number);
+			}
+			
 			w2mb_maps[map_id].setZoom(parseInt(attrs_array.zoom_map_onclick));
 			return attrs_array.zoom_map_onclick;
 		} {

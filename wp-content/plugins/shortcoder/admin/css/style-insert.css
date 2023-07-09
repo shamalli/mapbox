@@ -126,6 +126,8 @@ p .button {
     cursor: pointer;
     position: relative;
     box-shadow: 0 1px 5px -3px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-wrap: nowrap;
 }
 .sc_head:hover {
     background: lightyellow;
@@ -138,11 +140,25 @@ p .button {
     margin-right: 10px;
     transition: transform 0.8s;
 }
+.sc_head p{
+    white-space: nowrap;
+    display: inline-block;
+    margin: 0 10px 0 15px;
+    color: #666;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sc_head:hover .sc_tools{
+    background: lightyellow;
+}
+
 .sc_tools{
     position: absolute;
     top: 10px;
     right: 10px;
     display: none;
+    background: #fff;
 }
 .sc_tools .button{
     margin-left: 10px;
@@ -168,70 +184,72 @@ p .button {
     display: none;
 }
 
-/** Coffee **/
-.cfe_box{
-    background: #fff;
-    padding: 15px;
-    box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.2);
-    margin-top: 25px;
-    display: flex;
-    border-top: 3px solid #795548;
-}
-.cfe_text{
-    display: flex;
-    width: 100%;
-}
-.cfe_text img{
-    width: 64px;
-    margin-right: 15px;
-}
-.cfe_text h2{
-    font-weight: normal;
-    font-size: 21px;
-    margin: 10px 0 15px 0;
-}
-.cfe_form{
-    display: flex;
-    width: 250px;
-    height: 32px;
-    margin-top: 18px;
-}
-.cfe_amt{
-    font-size: 18px;
-    padding: 5px;
-    margin-right: 10px;
-    border-radius: 3px;
-}
-.cfe_btn{
-    text-align: center;
-}
-
-.ufw{
-    text-decoration: none;
+.top_btns{
     float: right;
-    color: #000;
+}
+.top_btns .button{
+    margin-left: 10px;
+}
+.promo_link{
     position: relative;
 }
-.ufw:hover{
-    text-decoration: underline;;
-}
-.ufw i{
+.promo_link i{
     opacity: 0.5;
 }
-.ufw span{
+.promo_link span{
     display: none;
     position: absolute;
     right: 0;
-    top: 150%;
-    text-align: right;
-    background: #333;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.5);
+    top: 35px;
+    z-index: 9999;
 }
-.ufw:hover span{
+.promo_link:hover span{
     display: block;
+}
+.promo_link span img{
+    width: 300px;
+    box-shadow: 0 2px 5px -2px rgb(0 0 0 / 50%);
+    border-radius: 10px;
+}
+
+/** Note **/
+.note{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffe2;
+    padding: 15px 20px;
+    border-top: 1px solid #dfdfdf;
+    box-shadow: 0 -2px 6px -5px #7d7d7d6e;
+}
+.note > p{
+    cursor: pointer;
+    font-size: 14px;
+}
+.note > p:hover{
+    color: #000;
+}
+.note table {
+    border-top: 1px solid #dfdfdf;
+    margin: 15px 0 0 0;
+    display: none;
+}
+.note pre{
+    background: #f7f7f7;
+    color: #333;
+    padding: 15px;
+    display: block;
+    margin: 0 0 20px 0;
+    border: 1px solid #dfdfdf;
+}
+.note td{
+    width: 50%;
+    padding: 15px 30px 0 30px;
+    vertical-align: top;
+}
+.note td p {
+    margin: 0 0 10px 0;
 }
 
 /** Footer **/

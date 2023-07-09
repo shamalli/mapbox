@@ -29,7 +29,10 @@ class w2mb_login_registrations {
 		$redirect_to = w2mb_getValue($_GET, 'redirect_to', $url);
 		$url = add_query_arg('redirect_to', urlencode($redirect_to), $url);
 	
-		$message = str_replace('<' . network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . '>', '<' . $url . '>', $message);
+		// Localize password reset message content for user.
+		$locale = get_user_locale( $user_data );
+	
+		$message = str_replace(network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . '&wp_lang=' . $locale, $url, $message);
 		
 		return $message;
 	}
@@ -48,7 +51,7 @@ class w2mb_login_registrations {
 			$redirect_to = w2mb_getValue($_GET, 'redirect_to', $url);
 			$url = add_query_arg('redirect_to', urlencode($redirect_to), $url);
 		
-			$wp_new_user_notification_email['message'] = str_replace('<' . network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user->user_login ), 'login' ) . '>', '<' . $url . '>', $wp_new_user_notification_email['message']);
+			$wp_new_user_notification_email['message'] = str_replace(network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user->user_login ), 'login' ), $url, $wp_new_user_notification_email['message']);
 			$wp_new_user_notification_email['message'] = str_replace(wp_login_url(), '', $wp_new_user_notification_email['message']);
 		}
 		
@@ -88,7 +91,11 @@ class w2mb_login_registrations {
 						} else {
 							w2mb_addMessage(strip_tags($errors->get_error_message()), 'error');
 							
-							wp_redirect($_SERVER['HTTP_REFERER']);
+							if (!empty($_SERVER['HTTP_REFERER'])) {
+								wp_redirect($_SERVER['HTTP_REFERER']);
+							} else {
+								wp_redirect();
+							}
 							exit;
 						}
 					} else {

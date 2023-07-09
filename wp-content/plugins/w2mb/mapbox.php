@@ -3,12 +3,12 @@
 Plugin Name: MapBox locator plugin
 Plugin URI: https://www.salephpscripts.com/wordpress-mapbox/
 Description: Build powerful, searchable and responsive MapBox (OpenStreetMap) with markers and insert them on pages in some seconds.
-Version: 1.0.12
+Version: 1.1.0
 Author: salephpscripts.com
 Author URI: https://www.salephpscripts.com
 */
 
-define('W2MB_VERSION', '1.0.12');
+define('W2MB_VERSION', '1.1.0');
 
 define('W2MB_PATH', plugin_dir_path(__FILE__));
 define('W2MB_URL', plugins_url('/', __FILE__));
@@ -24,7 +24,7 @@ define('W2MB_CATEGORIES_TAX', 'w2mb-category');
 define('W2MB_LOCATIONS_TAX', 'w2mb-location');
 define('W2MB_TAGS_TAX', 'w2mb-tag');
 
-define('W2MB_MAPBOX_VERSION', 'v2.2.0');
+define('W2MB_MAPBOX_VERSION', 'v2.10.0');
 
 include_once W2MB_PATH . 'install.php';
 include_once W2MB_PATH . 'classes/admin.php';
@@ -139,6 +139,10 @@ class w2mb_plugin {
 	public $listing_page_id;
 	public $listing_page_slug;
 	public $listing_page_url;
+	public $submit_page;
+	public $dashboard_page_url;
+	public $dashboard_page_slug;
+	public $dashboard_page_id;
 	public $frontend_controllers = array();
 	public $_frontend_controllers = array(); // this duplicate property needed because we unset each controller when we render shortcodes, but WP doesn't really know which shortcode already was processed
 	public $action;
@@ -264,8 +268,11 @@ class w2mb_plugin {
 					'prepend_attachment',
 					'convert_smilies',
 			);
+			$filters_to_repair = array();
 			foreach ($filters_to_remove AS $filter) {
 				while (($priority = has_filter('the_content', $filter)) !== false) {
+					$filters_to_repair[$filter] = $priority;
+					
 					remove_filter('the_content', $filter, $priority);
 				}
 			}
@@ -284,8 +291,18 @@ class w2mb_plugin {
 				$shortcode_controllers = $this->_frontend_controllers[$shortcode];
 				foreach ($shortcode_controllers AS $key=>&$controller) {
 					unset($this->_frontend_controllers[$shortcode][$key]); // there are possible more than 1 same shortcodes on a page, so we have to unset which already was displayed
-					if (method_exists($controller, 'display'))
-						return $controller->display();
+					if (method_exists($controller, 'display')) {
+						
+						$out = $controller->display();
+						
+						if ($filters_to_repair) {
+							foreach ($filters_to_repair AS $filter=>$priority) {
+								add_filter('the_content', $filter, $priority);
+							}
+						}
+						
+						return $out;
+					}
 				}
 			}
 	
@@ -297,8 +314,17 @@ class w2mb_plugin {
 				$this->frontend_controllers[$shortcode][] = $shortcode_instance;
 				$shortcode_instance->init($attrs[0], $shortcode);
 	
-				if (method_exists($shortcode_instance, 'display'))
-					return $shortcode_instance->display();
+				if (method_exists($shortcode_instance, 'display')) {
+					$out = $shortcode_instance->display();
+				
+					if ($filters_to_repair) {
+						foreach ($filters_to_repair AS $filter=>$priority) {
+							add_filter('the_content', $filter, $priority);
+						}
+					}
+					
+					return $out;
+				}
 			}
 		}
 	}
@@ -691,9 +717,9 @@ class w2mb_plugin {
 			wp_register_script('w2mb_mapbox', W2MB_RESOURCES_URL . 'js/mapboxgl.js', array('jquery'), W2MB_VERSION, true);
 			wp_enqueue_script('w2mb_mapbox');
 	
-			wp_register_script('w2mb_mapbox_draw', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js');
+			wp_register_script('w2mb_mapbox_draw', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.3.0/mapbox-gl-draw.js');
 			wp_enqueue_script('w2mb_mapbox_draw');
-			wp_register_style('w2mb_mapbox_draw', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css');
+			wp_register_style('w2mb_mapbox_draw', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.3.0/mapbox-gl-draw.css');
 			wp_enqueue_style('w2mb_mapbox_draw');
 			
 			wp_register_script('w2mb_mapbox_directions', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js');
@@ -701,7 +727,7 @@ class w2mb_plugin {
 			wp_register_style('w2mb_mapbox_directions', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css');
 			wp_enqueue_style('w2mb_mapbox_directions');
 					
-			wp_register_script('w2mb_mapbox_language', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js');
+			wp_register_script('w2mb_mapbox_language', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v1.0.0/mapbox-gl-language.js');
 			wp_enqueue_script('w2mb_mapbox_language');
 			
 			wp_localize_script(
@@ -801,7 +827,6 @@ class w2mb_plugin {
 						'marker_image_anchor_x' => (int)get_option('w2mb_map_marker_anchor_x'),
 						'marker_image_anchor_y' => (int)get_option('w2mb_map_marker_anchor_y'),
 						'infowindow_width' => (int)get_option('w2mb_map_infowindow_width'),
-						'infowindow_offset' => -(int)get_option('w2mb_map_infowindow_offset'),
 						'infowindow_logo_width' => (int)get_option('w2mb_map_infowindow_logo_width'),
 						'draw_area_button' => esc_html__('Draw Area', 'W2MB'),
 						'edit_area_button' => esc_html__('Edit Area', 'W2MB'),
@@ -866,7 +891,7 @@ class w2mb_plugin {
 		if (dirname(plugin_basename(__FILE__) == $file)) {
 			$row_meta = array(
 					'docs' => '<a href="https://www.salephpscripts.com/wordpress-mapbox/demo/documentation/">' . esc_html__("Documentation", "W2MB") . '</a>',
-					'codecanoyn' => '<a href="https://codecanyon.net/item/mapbox-locator-plugin-for-wordpress/27645284#item-description__changelog">' . esc_html__("Changelog", "W2MB") . '</a>',
+					'codecanoyn' => '<a href="https://www.salephpscripts.com/mapbox/#changelog">' . esc_html__("Changelog", "W2MB") . '</a>',
 			);
 	
 			return array_merge($links, $row_meta);

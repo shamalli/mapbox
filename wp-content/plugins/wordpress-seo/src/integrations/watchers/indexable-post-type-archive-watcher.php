@@ -1,9 +1,4 @@
 <?php
-/**
- * Post type archive watcher to save the meta data to an Indexable.
- *
- * @package Yoast\YoastSEO\Watchers
- */
 
 namespace Yoast\WP\SEO\Integrations\Watchers;
 
@@ -13,16 +8,11 @@ use Yoast\WP\SEO\Integrations\Integration_Interface;
 use Yoast\WP\SEO\Repositories\Indexable_Repository;
 
 /**
+ * Post type archive watcher to save the meta data to an Indexable.
+ *
  * Watches the home page options to save the meta information when updated.
  */
 class Indexable_Post_Type_Archive_Watcher implements Integration_Interface {
-
-	/**
-	 * @inheritDoc
-	 */
-	public static function get_conditionals() {
-		return [ Migrations_Conditional::class ];
-	}
 
 	/**
 	 * The indexable repository.
@@ -39,7 +29,16 @@ class Indexable_Post_Type_Archive_Watcher implements Integration_Interface {
 	protected $builder;
 
 	/**
-	 * Indexable_Author_Watcher constructor.
+	 * Returns the conditionals based on which this loadable should be active.
+	 *
+	 * @return array
+	 */
+	public static function get_conditionals() {
+		return [ Migrations_Conditional::class ];
+	}
+
+	/**
+	 * Indexable_Post_Type_Archive_Watcher constructor.
 	 *
 	 * @param Indexable_Repository $repository The repository to use.
 	 * @param Indexable_Builder    $builder    The post builder to use.
@@ -50,10 +49,12 @@ class Indexable_Post_Type_Archive_Watcher implements Integration_Interface {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Initializes the integration.
+	 *
+	 * This is the place to register hooks and filters.
 	 */
 	public function register_hooks() {
-		add_action( 'update_option_wpseo_titles', [ $this, 'check_option' ], 10, 2 );
+		\add_action( 'update_option_wpseo_titles', [ $this, 'check_option' ], 10, 2 );
 	}
 
 	/**
@@ -72,19 +73,19 @@ class Indexable_Post_Type_Archive_Watcher implements Integration_Interface {
 			$old_value = [];
 		}
 
-		if ( ! is_array( $old_value ) || ! is_array( $new_value ) ) {
+		if ( ! \is_array( $old_value ) || ! \is_array( $new_value ) ) {
 			return false;
 		}
 
-		$keys               = array_unique( array_merge( array_keys( $old_value ), array_keys( $new_value ) ) );
+		$keys               = \array_unique( \array_merge( \array_keys( $old_value ), \array_keys( $new_value ) ) );
 		$post_types_rebuild = [];
 
 		foreach ( $keys as $key ) {
 			$post_type = false;
 			// Check if it's a key relevant to post type archives.
 			foreach ( $relevant_keys as $relevant_key ) {
-				if ( strpos( $key, $relevant_key ) === 0 ) {
-					$post_type = substr( $key, strlen( $relevant_key ) );
+				if ( \strpos( $key, $relevant_key ) === 0 ) {
+					$post_type = \substr( $key, \strlen( $relevant_key ) );
 					break;
 				}
 			}
@@ -96,11 +97,11 @@ class Indexable_Post_Type_Archive_Watcher implements Integration_Interface {
 
 			// If the value was set but now isn't, is set but wasn't or is not the same it has changed.
 			if (
-				! in_array( $post_type, $post_types_rebuild, true ) &&
-				(
-					! isset( $old_value[ $key ] ) ||
-					! isset( $new_value[ $key ] ) ||
-					$old_value[ $key ] !== $new_value[ $key ]
+				! \in_array( $post_type, $post_types_rebuild, true )
+				&& (
+					! isset( $old_value[ $key ] )
+					|| ! isset( $new_value[ $key ] )
+					|| $old_value[ $key ] !== $new_value[ $key ]
 				)
 			) {
 				$this->build_indexable( $post_type );
@@ -121,6 +122,10 @@ class Indexable_Post_Type_Archive_Watcher implements Integration_Interface {
 	public function build_indexable( $post_type ) {
 		$indexable = $this->repository->find_for_post_type_archive( $post_type, false );
 		$indexable = $this->builder->build_for_post_type_archive( $post_type, $indexable );
-		$indexable->save();
+
+		if ( $indexable ) {
+			$indexable->object_last_modified = \max( $indexable->object_last_modified, \current_time( 'mysql' ) );
+			$indexable->save();
+		}
 	}
 }

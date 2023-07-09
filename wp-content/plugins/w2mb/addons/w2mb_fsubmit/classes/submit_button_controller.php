@@ -1,6 +1,8 @@
 <?php 
 
 class w2mb_submit_button_controller extends w2mb_frontend_controller {
+	
+	public $frontpanel_buttons;
 
 	public function init($args = array()) {
 		parent::init($args);

@@ -148,8 +148,11 @@ class w2mb_locations_manager {
 			$validation_results['w2mb_location[]'] = array_slice($validation_results['w2mb_location[]'], 0, $level->locations_number, true);
 	
 			foreach ($validation_results['w2mb_location[]'] AS $key=>$value) {
+				
+				$location_id = isset($validation_results['selected_tax[]'][$key]) ? $validation_results['selected_tax[]'][$key] : 0;
+				
 				if (
-					$validation_results['selected_tax[]'][$key] ||
+					$location_id ||
 					$validation_results['address_line_1[]'][$key] ||
 					$validation_results['address_line_2[]'][$key] ||
 					$validation_results['zip_or_postal_index[]'][$key] ||
@@ -157,7 +160,7 @@ class w2mb_locations_manager {
 				) {
 					$insert_values = array(
 							'post_id' => $post_id,
-							'location_id' => esc_sql($validation_results['selected_tax[]'][$key]),
+							'location_id' => esc_sql($location_id),
 							'address_line_1' => esc_sql($validation_results['address_line_1[]'][$key]),
 							'address_line_2' => esc_sql($validation_results['address_line_2[]'][$key]),
 							'zip_or_postal_index' => esc_sql($validation_results['zip_or_postal_index[]'][$key]),

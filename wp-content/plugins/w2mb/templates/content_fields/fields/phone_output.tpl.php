@@ -17,7 +17,7 @@
 		<?php elseif ($content_field->phone_mode == 'viber'): ?>
 		<a href="viber://chat?number=<?php echo esc_attr($content_field->value); ?>"><?php echo antispambot(esc_attr($content_field->value)); ?></a>
 		<?php elseif ($content_field->phone_mode == 'whatsapp'): ?>
-		<a href="https://wa.me/<?php echo esc_attr($content_field->value); ?>"><?php echo antispambot(esc_attr($content_field->value)); ?></a>
+		<a href="https://wa.me/<?php echo esc_attr($content_field->value); ?>" target="_blank"><?php echo antispambot(esc_attr($content_field->value)); ?></a>
 		<?php elseif ($content_field->phone_mode == 'telegram'): ?>
 		<a href="tg://resolve?domain=<?php echo esc_attr($content_field->value); ?>"><?php echo antispambot(esc_attr($content_field->value)); ?></a>
 		<?php endif; ?>

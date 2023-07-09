@@ -1,0 +1,144 @@
+/************************ Listing Dialog ************************/
+.w2mb-listing-dialog.ui-dialog {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  z-index: 1000000000;
+  position: fixed;
+  top: 0 !important;
+}
+
+.w2mb-listing-dialog.ui-dialog .ui-widget-header {
+  border: 0;
+  background: none;
+  background-color: #4297d7;
+  font-size: 25px;
+  border-radius: 0;
+}
+
+.w2mb-listing-dialog.ui-dialog .ui-dialog-content {
+  padding: 30px 15px;
+}
+
+.w2mb-listing-dialog.ui-dialog .ui-dialog-titlebar {
+  padding: 15px;
+}
+
+.w2mb-close-listing-dialog {
+  float: right;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/************************ Single Listing ************************/
+.w2mb-listing {
+  position: relative;
+  margin-bottom: 60px;
+  padding: 0;
+}
+
+article.w2mb-listing {
+  clear: none;
+}
+
+.w2mb-listing.w2mb-hidden-content {
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.w2mb-single-listing-text-content-wrap {
+  position: static;
+}
+
+.w2mb-single-listing-text-content-wrap:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+header.w2mb-listing-header {
+  overflow: hidden;
+}
+
+header.w2mb-listing-header h2 {
+  margin: 10px 0;
+  padding: 0;
+}
+
+header.w2mb-listing-header h2 a,
+header.w2mb-listing-header h2 a:hover,
+header.w2mb-listing-header h2 a:focus,
+header.w2mb-listing-header h2 a:visited {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.w2mb-author-link,
+.w2mb-listing-date,
+.w2mb-views-counter {
+  float: none;
+  margin-right: 10px;
+}
+
+.w2mb-meta-data:before,
+.w2mb-meta-data:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.w2mb-video-iframe {
+  height: 400px !important;
+  width: 100% !important;
+  margin-bottom: 20px;
+}
+
+.w2mb-tab-content .fluidvids {
+  padding-top: 400px !important;
+}
+
+em.w2mb-listing-date {
+  font-size: 0.8em;
+  display: block;
+}
+
+ul.w2mb-listing-tabs.w2mb-nav {
+  margin: 20px 0;
+}
+
+/************************ Listings Logo ************************/
+.w2mb-listing-logo-wrap {
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.w2mb-listing-logo .w2mb-listing-logo-img {
+  width: 100%;
+}
+
+figure.w2mb-listing-logo {
+  margin: 0;
+  position: relative;
+}
+
+figure.w2mb-listing-logo .w2mb-listing-logo-img-wrap {
+  display: block;
+  overflow: hidden;
+}
+
+figure.w2mb-listing-logo .w2mb-listing-logo-img {
+  max-width: 100%;
+  display: block;
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* We are working with background image, so hide native image */
+figure.w2mb-listing-logo .w2mb-listing-logo-img img {
+  visibility: hidden;
+  float: none;
+}

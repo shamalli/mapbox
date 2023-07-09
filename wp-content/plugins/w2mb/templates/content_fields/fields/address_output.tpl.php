@@ -15,6 +15,7 @@
 		<address class="w2mb-location" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 			<?php if ($location->map_coords_1 && $location->map_coords_2): ?><span class="w2mb-show-on-map" data-location-id="<?php echo esc_attr($location->id); ?>"><?php endif; ?>
 			<?php echo $location->getWholeAddress(); ?>
+			<?php if ($location->renderInfoFieldForMap()) echo '<div class="w2mb-location-additional-info">' . $location->renderInfoFieldForMap() . '</div>'; ?>
 			<?php if ($location->map_coords_1 && $location->map_coords_2): ?></span><?php endif; ?>
 		</address>
 	<?php endforeach; ?>

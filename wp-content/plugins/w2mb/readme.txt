@@ -2,8 +2,8 @@
 Contributors: Mihail Chepovskiy
 Donate link: https://www.salephpscripts.com/
 Tags: directions, mapbox map, openstreetmap, listing, directory, markers, clusters, search form, places, polygons, routes, visual composer, wordpress, wpml, youtube
-Tested up to: 5.7
-Stable tag: tags/1.0.12
+Tested up to: 6.2
+Stable tag: 1.1.0
 License: Commercial
 
 == Description ==
@@ -15,6 +15,13 @@ the most perfect tool to search needed places in accurately pictured area.
 Look at our [demo](https://www.salephpscripts.com/wordpress-mapbox/demo/)
 
 == Changelog ==
+
+= Version 1.1.0 =
+* New Updater
+* improvement: tags filter was added to the map configuration settings
+* improvement: open infoWindow by hash in URL #w2mb-marker-ID
+* improvement: added 'use_wrapper' parameter in [webmap-dashboard] shortcode
+* new setting: Images required
 
 = Version 1.0.12 =
 * bug fix: javascript error on search

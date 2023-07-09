@@ -243,12 +243,15 @@ class w2mb_ratings_plugin {
 	public function render_rating($listing, $meta_tags = false, $active = true, $show_avg = true) {
 		global $w2mb_instance;
 
-		if (get_option('w2mb_only_registered_users') && !get_current_user_id())
+		if (get_option('w2mb_only_registered_users') && !get_current_user_id()) {
 			$active = false;
-		if ((get_current_user_id() == $listing->post->post_author) && !current_user_can('manage_options'))
+		}
+		if ($listing->post->post_author && (get_current_user_id() == $listing->post->post_author) && !current_user_can('manage_options')) {
 			$active = false;
-		if ($w2mb_instance->action == 'printlisting' || $w2mb_instance->action == 'pdflisting')
+		}
+		if ($w2mb_instance->action == 'printlisting' || $w2mb_instance->action == 'pdflisting') {
 			$active = false;
+		}
 
 		w2mb_renderTemplate(array(W2MB_RATINGS_TEMPLATES_PATH, 'avg_rating.tpl.php'), array('listing' => $listing, 'meta_tags' => $meta_tags, 'active' => $active, 'show_avg' => $show_avg));
 		

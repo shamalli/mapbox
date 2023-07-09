@@ -4,6 +4,7 @@ class w2mb_frontend_controller {
 	public $args = array();
 	public $query;
 	public $template;
+	public $listing;
 	public $listings = array();
 	public $search_form;
 	public $map;

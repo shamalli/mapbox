@@ -14,6 +14,12 @@ $map_params = array(
 				'items' => w2mb_getMetaboxOptionsTerms(W2MB_LOCATIONS_TAX)
 		),
 		array(
+				'type' => 'multiselect',
+				'name' => 'tags',
+				'label' => __('Select specific tags to display on the map', 'W2MB'),
+				'items' => w2mb_getMetaboxOptionsTerms(W2MB_TAGS_TAX)
+		),
+		array(
 				'type' => 'toggle',
 				'name' => 'include_categories_children',
 				'label' => esc_html__('Include categories and locations children', 'W2MB'),

@@ -3,6 +3,7 @@
 class w2mb_content_field_hours extends w2mb_content_field {
 	public $hours_clock = 12;
 	public $week_days;
+	public $week_days_names;
 	
 	protected $can_be_required = false;
 	protected $can_be_ordered = false;
@@ -15,10 +16,30 @@ class w2mb_content_field_hours extends w2mb_content_field {
 	}
 	
 	public function isNotEmpty($listing) {
-		if (array_filter($this->value))
-			return true;
-		else
+		
+		if (array_filter($this->value)) {
+			
+			foreach ($this->week_days AS $day) {
+				if (!empty($this->value[$day.'_closed'])) {
+					return true;
+				}
+				$from_hour = $this->value[$day . '_from'];
+				$to_hour = $this->value[$day . '_to'];
+				if ($this->hours_clock == 12) {
+					if ($from_hour != '12:00 AM' || $to_hour != '12:00 AM') {
+						return true;
+					}
+				} elseif ($this->hours_clock == 24) {
+					if ($from_hour != '00:00' || $to_hour != '00:00') {
+						return true;
+					}
+				}
+			}
+			
 			return false;
+		} else {
+			return false;
+		}
 	}
 
 	public function configure() {
@@ -101,10 +122,8 @@ class w2mb_content_field_hours extends w2mb_content_field {
 				$from_am_pm = $validation->result_array($day.'_from_am_pm_'.$this->id);
 				$to_am_pm = $validation->result_array($day.'_to_am_pm_'.$this->id);
 				if (
-					$from_hour != '00:00' ||
-					$to_hour != '00:00' ||
-					($this->hours_clock == 12 && $from_am_pm != 'AM') ||
-					($this->hours_clock == 12 && $to_am_pm != 'AM')
+					($this->hours_clock == 12 && ($from_hour != '12:00' || $to_hour != '12:00' || $from_am_pm != 'AM' || $to_am_pm != 'AM')) ||
+					($this->hours_clock == 24 && ($from_hour != '00:00' || $to_hour != '00:00'))
 				) {
 					$value[$day.'_from'] = $from_hour.(($this->hours_clock == 12) ? ' '.$from_am_pm : '');
 					$value[$day.'_to'] = $to_hour.(($this->hours_clock == 12) ? ' '.$to_am_pm : '');

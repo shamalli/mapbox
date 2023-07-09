@@ -54,7 +54,7 @@ class w2mb_content_field_select_search extends w2mb_content_field_search {
 			}
 		}
 		
-		if (!is_array($this->value)) {
+		if ($this->value && !is_array($this->value)) {
 			$this->value = array_filter(explode(',', $this->value), 'strlen');
 		}
 		
